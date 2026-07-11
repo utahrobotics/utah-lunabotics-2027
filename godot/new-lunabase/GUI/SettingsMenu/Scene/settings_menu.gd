@@ -32,7 +32,6 @@ func _ready() -> void:
 	if disable_ui_inputs:
 		_disable_non_pointer_ui_navigation()
 	control_scheme_switcher.updated_control_scheme.connect(_on_controls_updated)
-	control_scheme_switcher.close_settings_menu.connect(_on_settings_button_toggled)
 
 
 func _disable_non_pointer_ui_navigation() -> void:
