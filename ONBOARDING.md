@@ -259,6 +259,12 @@ rerun --version
 
 ---
 
+### LunaServer
+
+We run a Linux server on campus (it's just our robot PC from 2025) that can be used for development. It can be accessed via SSH on-campus at the hostname `Lunaserver32GB` or off-campus using the [campus VPN](https://uofu.service-now.com/uitkb?id=uit_of_kb_article_view&sysparm_article=KB0000538) at hostname `lunaserver32gb.uconnect.utah.edu`. Ask a team lead to get a user account set up for you.
+
+The recommended path is to use [VSCode's built in remote development feature](https://code.visualstudio.com/docs/remote/ssh) to access and develop on this machine. You will be able to compile and run the prod environment, using the Linux instructions.
+
 ## 4. Clone & Build the Project
 
 ```bash
