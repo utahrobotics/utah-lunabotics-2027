@@ -12,7 +12,7 @@ corner_radius_bottom_left = 20
 
 [node name="Panel" type="Panel" unique_id=1001667156]
 offset_right = 906.2307
-offset_bottom = 357.0
+offset_bottom = 260.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_5b5wv")
 script = ExtResource("1_5b5wv")
 
@@ -23,122 +23,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 19
+theme_override_constants/separation = 18
 alignment = 1
 
-[node name="HBoxContainerSource" type="HBoxContainer" parent="VBoxContainer" unique_id=1209024244]
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=308482773]
 layout_mode = 2
-alignment = 1
+text = "Control Bindings"
+horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainerSource" unique_id=518620640]
+[node name="ConfigStatusLabel" type="Label" parent="VBoxContainer" unique_id=524786134]
 layout_mode = 2
-text = "Active Source:"
-
-[node name="ActiveSourceOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainerSource" unique_id=808860878]
-layout_mode = 2
-
-[node name="ActiveSchemeLabel" type="Label" parent="VBoxContainer" unique_id=524786134]
-layout_mode = 2
-text = "Active input source: "
+text = "Controls loaded from control_config.json"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1167786125]
+[node name="HelpLabel" type="Label" parent="VBoxContainer" unique_id=117869402]
 layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=598773090]
-layout_mode = 2
-text = "Controller Scheme: "
-
-[node name="ControllerSchemeOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=805731581]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1320455947]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=96430671]
-layout_mode = 2
-text = "Keyboard Scheme: "
-
-[node name="KeyboardSchemeOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer2" unique_id=98250649]
-layout_mode = 2
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer" unique_id=1720532089]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4" unique_id=2005506046]
-layout_mode = 2
-text = "Local Schemes: "
-
-[node name="LocalSchemeOptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer4" unique_id=591643682]
-layout_mode = 2
-selected = 0
-item_count = 1
-popup/item_0/text = "None Selected"
-popup/item_0/id = 0
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer" unique_id=2100440001]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3" unique_id=2100440002]
-layout_mode = 2
-text = "Touch screen controls:"
-
-[node name="TouchControlsCheckButton" type="CheckButton" parent="VBoxContainer/HBoxContainer3" unique_id=2100440003]
-layout_mode = 2
-text = "Show on-screen touch controls"
-
-[node name="DefaultButton" type="Button" parent="." unique_id=169126372]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -38.0
-offset_right = -10.0
-offset_bottom = -7.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = ExtResource("2_5lhh3")
-text = "Revert to Default"
-
-[node name="CreateBindingButton" type="Button" parent="." unique_id=705257740]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = -37.0
-offset_right = 172.0
-offset_bottom = -7.0
-grow_vertical = 0
-theme = ExtResource("2_5lhh3")
-text = "Create custom binding"
+text = "Edit control_config.json to change bindings, then reload the config here or restart Lunabase."
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="ReloadConfigButton" type="Button" parent="." unique_id=1847411007]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 183.0
-offset_top = -37.0
-offset_right = 338.0
-offset_bottom = -7.0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = 84.0
+offset_right = 82.5
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_5lhh3")
-text = "Reload Config"
+text = "Reload JSON Config"
 
-[connection signal="item_selected" from="VBoxContainer/HBoxContainerSource/ActiveSourceOptionButton" to="." method="_on_active_source_option_button_item_selected"]
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer/ControllerSchemeOptionButton" to="." method="_on_controller_scheme_option_button_item_selected"]
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer2/KeyboardSchemeOptionButton" to="." method="_on_keyboard_scheme_option_button_item_selected"]
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer4/LocalSchemeOptionButton" to="." method="_on_local_scheme_option_button_item_selected"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer3/TouchControlsCheckButton" to="." method="_on_touch_controls_check_toggled"]
-[connection signal="pressed" from="DefaultButton" to="." method="_on_default_button_pressed"]
-[connection signal="pressed" from="CreateBindingButton" to="." method="_on_create_binding_button_pressed"]
 [connection signal="pressed" from="ReloadConfigButton" to="." method="_on_reload_config_button_pressed"]

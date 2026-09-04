@@ -1,11 +1,47 @@
-# Installation
-As of now, only the stable release of Godot 4.6 is needed
+# Starting Work in Lunabase
 
-Since we are using GDExtension to use Rust be sure to do set it up
+Lunabase is the Godot based UI for the rover. It uses a Rust
+GDExtension, so the Godot Editor needs both the Lunabase Godot project files and a compiled Rust library before the editor can load without errors.
 
-Go to
-> lunabase-lib
-and run cargo build. Do this any time the lib.rs for godot is updated
+> Please oh please read all of this before working on lunabase
+
+## First-Time Setup
+
+1. Clone the repository.
+
+2. Install Godot 4.7 stable. (You only need the stable version. Don't worry about the other versions like mono and such)
+
+3. Install Rust if you haven't yet
+
+4. Build the Lunabase GDExtension.
+
+
+   In lunabase-lib run
+   ```
+   cargo build
+   ```
+
+   This should create the native library that Godot loads:
+   - Windows: `target/debug/lunabase_lib.dll`
+   - Linux: `target/debug/liblunabase_lib.so`
+   - macOS: `target/debug/liblunabase_lib.dylib`
+
+5. Open the Godot project.
+   In Godot, click "Import" and select the project.godot file in new-lunabase/
+
+## How to link GDExtension
+
+Running cargo build should be enough since the lunabase.gdextension file tells godot where to look for the rust library. If you get this error"
+
+```
+GDExtension dynamic library not found: 'res://lunabase.gdextension'
+Cannot get class 'LunabaseConnection'
+```
+
+then the Rust extension probably has not been built yet, or it was built in the
+wrong location. Run `cargo build` from `lunabase-lib`, then restart Godot.
+
+> Rebuild the GDExtension any time code in `lunabase-lib/src/lib.rs` changes.
 
 # Contributing
 
