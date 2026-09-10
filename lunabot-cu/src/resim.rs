@@ -54,6 +54,7 @@ fn default_callback(step: default::SimStep) -> SimOverride {
         default::SimStep::ObstacleGstreamer(..) => SimOverride::ExecutedBySim,
         default::SimStep::T265LeftGstreamer(..) => SimOverride::ExecutedBySim,
         default::SimStep::T265RightGstreamer(..) => SimOverride::ExecutedBySim,
+        default::SimStep::T265BackGstreamer(..) => SimOverride::ExecutedBySim,
         default::SimStep::CamD456Rgb(_) | default::SimStep::CamD456RgbNull(_) => {
             SimOverride::ExecutedBySim
         }
@@ -99,6 +100,8 @@ fn run_one_copperlist(
             default::SimStep::ObstacleGstreamer(..) => SimOverride::ExecutedBySim,
             default::SimStep::T265LeftGstreamer(..) => SimOverride::ExecutedBySim,
             default::SimStep::T265RightGstreamer(..) => SimOverride::ExecutedBySim,
+            default::SimStep::T265BackGstreamer(..) => SimOverride::ExecutedBySim,
+
             default::SimStep::L2Pointcloud(CuTaskCallbackState::Process(_, output)) => {
                 *output = msgs.get_l_2_pointcloud_output().clone();
                 output.tov = robot_clock.now().into();
