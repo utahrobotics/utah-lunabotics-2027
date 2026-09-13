@@ -24,7 +24,9 @@
         overlays = [ (import inputs.rust-overlay) ];
         pkgs = import inputs.nixpkgs { inherit system overlays; };
 
-        rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+        rustToolchain = (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml).override {
+          extensions = [ "rust-src" ];
+        };
 
         mujocoPins = {
           ccd = pkgs.fetchFromGitHub {
