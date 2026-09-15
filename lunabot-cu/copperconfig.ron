@@ -208,37 +208,38 @@
                 "vesc_pairs": [
                     {
                         "id1": 100,
-                        "id2": 56,
+                        "id2": 57,
                         "mask1": "Left",
                         "mask2": "Right",
                         "command_both": true
                     },
 
-                    // the new vesc matthew G has been configuring
-                    {
-                        "id1": 10,
-                        "id2": 8,
-                        "mask1": "Right",
-                        "mask2": "Left",
-                        "command_both": true
-                    },
+                    // V OUTDATED V 
+                    // // the new vesc matthew G has been configuring
+                    // {
+                    //     "id1": 10,
+                    //     "id2": 8,
+                    //     "mask1": "Right",
+                    //     "mask2": "Left",
+                    //     "command_both": true
+                    // },
 
-                    // WORKING VESC: 
-                    {
-                        "id1": 75,
-                        "id2": 110,
-                        "mask1": "Right",
-                        "mask2": "Left",
-                        "command_both": true,
-                    },
+                    // // WORKING VESC: 
+                    // {
+                    //     "id1": 75,
+                    //     "id2": 110,
+                    //     "mask1": "Right",
+                    //     "mask2": "Left",
+                    //     "command_both": true,
+                    // },
 
-                    {   // do not use this one, I think this is the one with a permission denied problem on ttyACM*?
-                        "id1": 63,
-                        "id2": 74,
-                        "mask1": "Left",
-                        "mask2": "Left",
-                        "command_both": true,
-                    }
+                    // {   // do not use this one, I think this is the one with a permission denied problem on ttyACM*?
+                    //     "id1": 63,
+                    //     "id2": 74,
+                    //     "mask1": "Left",
+                    //     "mask2": "Left",
+                    //     "command_both": true,
+                    // }
                 ],
             }
         ),

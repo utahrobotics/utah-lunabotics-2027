@@ -1,5 +1,8 @@
 #![cfg(all(target_os = "linux", not(any(feature = "resim", feature = "sim"))))]
 
+//DEBUG ONLY
+// use std::backtrace::Backtrace;
+
 use anyhow::{Context, Result};
 use crate::utils::udev_poll;
 use core::f32;
@@ -69,6 +72,7 @@ impl VescIDs {
         mask2: MotorMask,
         command_both: bool,
     ) -> bool {
+	    println!("From {}\n\tid1={}, id2={}", /*Backtrace::force_capture()*/"", id1, id2);
         if self.motor_masks.contains_key(&id1) || self.motor_masks.contains_key(&id2) {
             return true;
         }
@@ -252,12 +256,14 @@ struct MotorTask {
 
 impl MotorTask {
     fn motor_task(&mut self) {
+        println!("[MOTORS] Began motor_task");
         let path_str = match self.path.recv() {
             Ok(x) => x,
             Err(_) => loop {
                 std::thread::park();
             },
         };
+        println!("[MOTORS] Not in an infiite loop!");
         let mut motor_port;
         {
             let _guard = get_tokio_handle().enter();
@@ -280,6 +286,8 @@ impl MotorTask {
             ));
         }
         let mut motor_port = BufStream::new(motor_port);
+        println!("[MOTORS] motor_task got port");
+        
 
         let master_can_id;
         loop {
@@ -293,6 +301,7 @@ impl MotorTask {
                 while response.len() < 63 || response.last() != Some(&3) {
                     let n = motor_port.read(&mut tmp_buf).await?;
                     response.extend_from_slice(&tmp_buf[..n]);
+                    println!("{:?}", tmp_buf);
                 }
                 std::io::Result::Ok(response)
             };
@@ -326,6 +335,9 @@ impl MotorTask {
             master_can_id = values.vesc_id;
             break;
         }
+
+        println!("[MOTORS] motor_task master_can_id={}", master_can_id);
+        let master_can_id = 57;
 
         let Some(&slave_can) = self.vesc_ids.can_ids.get(&master_can_id) else {
             self.motor_ref.push_error(format!("Found unknown master Can ID {master_can_id}"));
