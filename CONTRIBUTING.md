@@ -1,8 +1,12 @@
 # Contributing
 
 Welcome to our repository! This document covers...
+* Git Practices
 * Standard development workflow
 * Code style
+
+## Git Practices
+* Name your branches with your name and the issue number, if applicable. For example `hbarber/69-fix-stupid-broken-thing` and not `fix-stupid-broken-thing`. 
 
 ## Development practice
 
@@ -34,7 +38,7 @@ Code owners also have the power to force merge PRs, which should be used in limi
 
 For the most part, just do whatever you think is good. Good variables are a must, and so
 are documentation comments. Follow standard Rust conventions where applicable (i.e. case for
-variables, functions, structs).
+variables, functions, structs). 
 
 ## Appendix
 ### Appendix A
@@ -52,3 +56,11 @@ example, if a code owner watches the testing and reviews the changes another mak
 in the reviewer going through the regular process. Such friction can slow things down (adding merge conflicts), and create
 perverse incentives (such as cramming too much into one PR).
 
+### Appendix B - a note on AI
+
+- You *may* use AI assistance to understand code and write syntax. 
+- You *may not*: 
+    - Use AI to write PR descriptions or commit messages
+    - Push code written by an LLM without first thoroughly reviewing it.
+- Remember that you are (presumably) here to learn, and offloading your thinking to a robot fails to accomplish that. 
+- As useful as AI can be, it's not very good at low-level Rust. Don't rely on it. 
