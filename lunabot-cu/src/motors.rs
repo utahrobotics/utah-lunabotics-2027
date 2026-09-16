@@ -171,6 +171,8 @@ pub fn enumerate_motors(
         .filter_map(|device| {
             let vendor = device.property_value("ID_VENDOR")?.to_str()?;
             let serial = device.property_value("ID_SERIAL")?.to_str()?;
+
+            println!("[MOTORS] ??? {} {}", vendor, serial);
             
             if vendor == "STMicroelectronics" && 
                serial == "STMicroelectronics_ChibiOS_RT_Virtual_COM_Port_304" {
@@ -194,6 +196,7 @@ pub fn enumerate_motors(
     let vesc_ids = Box::leak(Box::new(vesc_ids));
 
     for path in initial_devices {
+        println!("[MOTORS] Path: {}", path);
         let _ = tx.send(path);
     }
 
@@ -332,12 +335,12 @@ impl MotorTask {
                 std::thread::sleep(std::time::Duration::from_secs(1));
                 continue;
             };
+            println!("[MOTORS] values thingy: {:?}", values);
             master_can_id = values.vesc_id;
             break;
         }
 
         println!("[MOTORS] motor_task master_can_id={}", master_can_id);
-        let master_can_id = 57;
 
         let Some(&slave_can) = self.vesc_ids.can_ids.get(&master_can_id) else {
             self.motor_ref.push_error(format!("Found unknown master Can ID {master_can_id}"));

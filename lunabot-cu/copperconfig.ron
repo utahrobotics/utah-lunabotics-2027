@@ -207,8 +207,8 @@
                 "speed_multiplier": 1500,
                 "vesc_pairs": [
                     {
-                        "id1": 100,
-                        "id2": 57,
+                        "id1": 57,
+                        "id2": 56,
                         "mask1": "Left",
                         "mask2": "Right",
                         "command_both": true
