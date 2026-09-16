@@ -1,12 +1,8 @@
 # Contributing
 
 Welcome to our repository! This document covers...
-* Git Practices
 * Standard development workflow
 * Code style
-
-## Git Practices
-* Name your branches with your name and the issue number, if applicable. For example `hbarber/69-fix-stupid-broken-thing` and not `fix-stupid-broken-thing`. 
 
 ## Development practice
 
@@ -33,6 +29,14 @@ Squash merges are not recommended, but this may change in the future.
 
 Code owners also have the power to force merge PRs, which should be used in limited scenarios.  
 &nbsp;&nbsp;&rdsh; *Why would you do that?* See [Appendix A](#appendix-a)
+
+### Git
+
+* Keep branch names descriptive and concise. 
+* Use kebab case for branch names, for example `hbarber/fix-stupid-broken-thing`
+* After merging a PR, please delete any associated feature branches
+* If you want eyes on your code but it isn't ready for production yet, create a draft PR!
+
 
 ## Code style
 
