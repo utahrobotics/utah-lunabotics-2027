@@ -1,8 +1,5 @@
 #![cfg(all(target_os = "linux", not(any(feature = "resim", feature = "sim"))))]
 
-//DEBUG ONLY
-// use std::backtrace::Backtrace;
-
 use anyhow::{Context, Result};
 use crate::utils::udev_poll;
 use core::f32;
@@ -72,7 +69,6 @@ impl VescIDs {
         mask2: MotorMask,
         command_both: bool,
     ) -> bool {
-	    println!("From {}\n\tid1={}, id2={}", /*Backtrace::force_capture()*/"", id1, id2);
         if self.motor_masks.contains_key(&id1) || self.motor_masks.contains_key(&id2) {
             return true;
         }
@@ -172,7 +168,7 @@ pub fn enumerate_motors(
             let vendor = device.property_value("ID_VENDOR")?.to_str()?;
             let serial = device.property_value("ID_SERIAL")?.to_str()?;
 
-            println!("[MOTORS] ??? {} {}", vendor, serial);
+
             
             if vendor == "STMicroelectronics" && 
                serial == "STMicroelectronics_ChibiOS_RT_Virtual_COM_Port_304" {
@@ -196,7 +192,7 @@ pub fn enumerate_motors(
     let vesc_ids = Box::leak(Box::new(vesc_ids));
 
     for path in initial_devices {
-        println!("[MOTORS] Path: {}", path);
+
         let _ = tx.send(path);
     }
 
@@ -259,14 +255,14 @@ struct MotorTask {
 
 impl MotorTask {
     fn motor_task(&mut self) {
-        println!("[MOTORS] Began motor_task");
+
         let path_str = match self.path.recv() {
             Ok(x) => x,
             Err(_) => loop {
                 std::thread::park();
             },
         };
-        println!("[MOTORS] Not in an infiite loop!");
+
         let mut motor_port;
         {
             let _guard = get_tokio_handle().enter();
@@ -289,7 +285,7 @@ impl MotorTask {
             ));
         }
         let mut motor_port = BufStream::new(motor_port);
-        println!("[MOTORS] motor_task got port");
+
         
 
         let master_can_id;
@@ -335,19 +331,19 @@ impl MotorTask {
                 std::thread::sleep(std::time::Duration::from_secs(1));
                 continue;
             };
-            println!("[MOTORS] values thingy: {:?}", values);
+
             master_can_id = values.vesc_id;
             break;
         }
 
-        println!("[MOTORS] motor_task master_can_id={}", master_can_id);
+
 
         let Some(&slave_can) = self.vesc_ids.can_ids.get(&master_can_id) else {
             self.motor_ref.push_error(format!("Found unknown master Can ID {master_can_id}"));
             return;
         };
 
-        println!("[MOTORS] Opened motor master can: {master_can_id}. Slave can: {slave_can:?}");
+
 
         if let Some((can_id, _)) = slave_can {
             loop {
