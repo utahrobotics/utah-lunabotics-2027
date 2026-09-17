@@ -28,7 +28,7 @@ cu29-export = { version = "1.2.0" }
 
 cu-bincode = { version = "2.1.0", features = ["derive", "serde"] }
 cu29-helpers = { version = "1.2.0" }
-cu-apriltag = { version = "1.1.1" }
+cu-apriltag = { git = "https://github.com/matthewashton-k/copper-rs.git", branch = "master", package = "cu-apriltag" }
 # cu-consolemon = { git = "https://github.com/matthewashton-k/copper-rs.git", branch = "master", package = "cu-consolemon" }
 cu-sensor-payloads = { version = "1.2.0" }
 cu-spatial-payloads = { version = "1.1.1", features = [

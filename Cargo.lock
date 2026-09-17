@@ -179,7 +179,7 @@ version = "0.1.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "apriltag",
- "nalgebra",
+ "nalgebra 0.34.2",
 ]
 
 [[package]]
@@ -447,6 +447,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "assert_type_match"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f548ad2c4031f2902e3edc1f29c29e835829437de49562d8eb5dc5584d3a1043"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
 name = "async-channel"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -605,6 +616,86 @@ name = "base64"
 version = "0.22.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
+
+[[package]]
+name = "bevy_macro_utils"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7164fe229422295bba15f1885048f34f4660db069aacb895208f996b0c7784fb"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+ "toml_edit",
+]
+
+[[package]]
+name = "bevy_platform"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fd610a417e7b4a3b9602cf11264d16cbbff8eabe689c5fed8be4e84c6a2680a3"
+dependencies = [
+ "foldhash 0.2.0",
+ "futures-channel",
+ "hashbrown 0.16.1",
+ "portable-atomic",
+ "portable-atomic-util",
+ "serde",
+ "spin 0.10.0",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "bevy_ptr"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1974de4b140f102fded747229ff4a61921acec07f02f0d1dcdadfe9ce177d0ff"
+
+[[package]]
+name = "bevy_reflect"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b76c3d056da3e299b84652ccf914c487b786857225d8ffbc8fc9509441a9e6b"
+dependencies = [
+ "assert_type_match",
+ "bevy_platform",
+ "bevy_ptr",
+ "bevy_reflect_derive",
+ "bevy_utils",
+ "derive_more",
+ "disqualified",
+ "downcast-rs 2.0.2",
+ "erased-serde",
+ "foldhash 0.2.0",
+ "serde",
+ "thiserror 2.0.18",
+ "variadics_please",
+]
+
+[[package]]
+name = "bevy_reflect_derive"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5fc5f820ee52afeca6d3bb83f15c1bf61ea6196c840a761a21a8bc266a3b166e"
+dependencies = [
+ "bevy_macro_utils",
+ "indexmap",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+ "uuid",
+]
+
+[[package]]
+name = "bevy_utils"
+version = "0.19.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de51fa7ea2e95d4c2d1278c5629285d59eec951cc60c992964c03f30910ef5a1"
+dependencies = [
+ "bevy_platform",
+ "disqualified",
+ "indexmap",
+]
 
 [[package]]
 name = "bindgen"
@@ -940,6 +1031,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "14c638459986b83c2b885179bd4ea6a2cbb05697b001501a56adb3a3d230803b"
 
 [[package]]
+name = "circular-buffer"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "662f6b21c6e889ee4e3f449e197c40f03603472fcd40c709093d386e3dca07cf"
+
+[[package]]
 name = "clang-sys"
 version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1087,7 +1184,7 @@ dependencies = [
  "crossbeam",
  "cu-bincode",
  "embedded_common",
- "nalgebra",
+ "nalgebra 0.34.2",
  "once_cell",
  "serde",
 ]
@@ -1105,6 +1202,20 @@ dependencies = [
  "ryu",
  "serde",
  "static_assertions",
+]
+
+[[package]]
+name = "compact_str"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79fcda08c33bb58b97008b2cdada6622500e949e060f5913361763121abd2416"
+dependencies = [
+ "castaway",
+ "cfg-if",
+ "itoa",
+ "serde",
+ "static_assertions",
+ "zmij",
 ]
 
 [[package]]
@@ -1442,19 +1553,19 @@ dependencies = [
  "apriltag-sys",
  "arrayvec",
  "cu-bincode",
- "cu-sensor-payloads",
- "cu-spatial-payloads",
- "cu29",
- "nalgebra",
+ "cu-sensor-payloads 0.12.0",
+ "cu-spatial-payloads 0.12.0",
+ "cu29 0.12.0",
+ "nalgebra 0.34.2",
  "ron",
  "serde",
 ]
 
 [[package]]
 name = "cu-bincode"
-version = "2.0.2"
+version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1eda67fee472a107a33d58e018ed99987426aabb7e0a8a4f0e545df82ebbbf88"
+checksum = "c056e8c9d8cf3f467a1617daddacc4920d32b214ab371f98160033d6b9749138"
 dependencies = [
  "cu-bincode-derive",
  "serde",
@@ -1463,24 +1574,26 @@ dependencies = [
 
 [[package]]
 name = "cu-bincode-derive"
-version = "2.0.2"
+version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6ab3b62cf42324786e79e3634b4ab811a2750237071db5f999b3ba7c436e2dc"
+checksum = "02017dde7974608238c1bebbac86a36fdd7d7029400f76b0f400ee260e27ed14"
 dependencies = [
  "virtue",
 ]
 
 [[package]]
 name = "cu-gstreamer"
-version = "0.12.0"
-source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c9e50e6a964d62c3fba19f26717dfb9601a17ef17d6b56ee5c5dfd5f5393810d"
 dependencies = [
  "cfg_aliases",
- "circular-buffer",
+ "circular-buffer 2.0.1",
  "cu-bincode",
- "cu29",
- "gstreamer",
- "gstreamer-app",
+ "cu29 1.2.0",
+ "cu29-build",
+ "gstreamer 0.25.3",
+ "gstreamer-app 0.25.2",
  "serde",
 ]
 
@@ -1490,12 +1603,25 @@ version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "cu-bincode",
- "cu29",
- "cu29-clock",
- "cu29-soa-derive",
+ "cu29 0.12.0",
+ "cu29-clock 0.12.0",
+ "cu29-soa-derive 0.12.0",
  "derive_more",
  "serde",
- "uom",
+ "uom 0.37.0",
+]
+
+[[package]]
+name = "cu-sensor-payloads"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a15b081998e6e4fb8ab4342fd1c29c8d2dfa4053dd280cdd73dc9f37317dbe43"
+dependencies = [
+ "cu-bincode",
+ "cu29 1.2.0",
+ "cu29-clock 1.2.0",
+ "cu29-soa-derive 1.2.0",
+ "serde",
 ]
 
 [[package]]
@@ -1505,9 +1631,24 @@ source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9
 dependencies = [
  "cu-bincode",
  "glam 0.30.10",
- "nalgebra",
+ "nalgebra 0.34.2",
  "serde",
- "uom",
+ "uom 0.37.0",
+]
+
+[[package]]
+name = "cu-spatial-payloads"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e6d35a3fe72d147acaac2aed2c9a8867dae26862dbb256347304c35a3663478"
+dependencies = [
+ "cu-bincode",
+ "cu29 1.2.0",
+ "cu29-soa-derive 1.2.0",
+ "glam 0.33.7",
+ "libm",
+ "nalgebra 0.35.0",
+ "serde",
 ]
 
 [[package]]
@@ -1517,18 +1658,51 @@ source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9
 dependencies = [
  "ctrlc",
  "cu-bincode",
- "cu29-clock",
- "cu29-derive",
- "cu29-log",
- "cu29-log-derive",
- "cu29-log-runtime",
- "cu29-runtime",
- "cu29-traits",
- "cu29-unifiedlog",
- "cu29-value",
+ "cu29-clock 0.12.0",
+ "cu29-derive 0.12.0",
+ "cu29-log 0.12.0",
+ "cu29-log-derive 0.12.0",
+ "cu29-log-runtime 0.12.0",
+ "cu29-runtime 0.12.0",
+ "cu29-traits 0.12.0",
+ "cu29-unifiedlog 0.12.0",
+ "cu29-value 0.12.0",
  "rayon",
  "serde",
 ]
+
+[[package]]
+name = "cu29"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "567b674fbb6e17d0c1d276e614914bff23c25ad359b9d285f15880e38854a2b3"
+dependencies = [
+ "bevy_reflect_derive",
+ "ctrlc",
+ "cu-bincode",
+ "cu29-build",
+ "cu29-clock 1.2.0",
+ "cu29-derive 1.2.0",
+ "cu29-log 1.2.0",
+ "cu29-log-derive 1.2.0",
+ "cu29-log-runtime 1.2.0",
+ "cu29-reflect-derive",
+ "cu29-runtime 1.2.0",
+ "cu29-traits 1.2.0",
+ "cu29-unifiedlog 1.2.0",
+ "cu29-units",
+ "cu29-value 1.2.0",
+ "rayon",
+ "serde",
+ "serde_derive",
+ "spin 0.12.3",
+]
+
+[[package]]
+name = "cu29-build"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "42290f13b58b383dc51fc392003b425b625439e48457b34d40e21758781609c0"
 
 [[package]]
 name = "cu29-clock"
@@ -1542,14 +1716,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu29-clock"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "632408257c1af0ff4731054bd84c0922db334252d10c6b56f8cbabaad7267c79"
+dependencies = [
+ "bevy_reflect",
+ "cortex-m",
+ "cu-bincode",
+ "portable-atomic",
+ "serde",
+ "web-time",
+]
+
+[[package]]
 name = "cu29-derive"
 version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "convert_case 0.11.0",
- "cu29-runtime",
- "cu29-traits",
- "cu29-unifiedlog",
+ "cu29-runtime 0.12.0",
+ "cu29-traits 0.12.0",
+ "cu29-unifiedlog 0.12.0",
  "itertools 0.14.0",
  "proc-macro2",
  "quote",
@@ -1558,15 +1746,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu29-derive"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9ab541b22a7f6f54c255ca8a684347ac1baf3591a693f319a2c60bc3211f80ee"
+dependencies = [
+ "convert_case 0.11.0",
+ "cu29-build",
+ "cu29-runtime 1.2.0",
+ "cu29-traits 1.2.0",
+ "cu29-unifiedlog 1.2.0",
+ "cu29-units",
+ "itertools 0.15.0",
+ "proc-macro2",
+ "quote",
+ "syn 3.0.5",
+ "walkdir",
+]
+
+[[package]]
 name = "cu29-export"
-version = "0.12.0"
-source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "295bc423bfacf0453932755c59985d1f963a85364cd491d7d58daa51a282d89b"
 dependencies = [
  "clap",
  "cu-bincode",
- "cu29",
- "cu29-clock",
- "cu29-intern-strs",
+ "cu29 1.2.0",
+ "cu29-clock 1.2.0",
+ "cu29-intern-strs 1.2.0",
  "num-format",
  "serde",
  "serde_json",
@@ -1574,16 +1782,9 @@ dependencies = [
 
 [[package]]
 name = "cu29-helpers"
-version = "0.12.0"
-source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
-dependencies = [
- "cu29-clock",
- "cu29-log-runtime",
- "cu29-runtime",
- "cu29-traits",
- "cu29-unifiedlog",
- "simplelog",
-]
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "45cc1401bf390ec3bdddd890cca773b4531237f5d4bd5b7ab608c0ae652307d1"
 
 [[package]]
 name = "cu29-intern-strs"
@@ -1596,14 +1797,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu29-intern-strs"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f08bd35ef3af447c2893082fe3ee210ac3d0d861fc632b89e1d480fda7cdf768"
+dependencies = [
+ "anyhow",
+ "cu-bincode",
+ "fs2",
+]
+
+[[package]]
 name = "cu29-log"
 version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "cu-bincode",
- "cu29-clock",
- "cu29-traits",
- "cu29-value",
+ "cu29-clock 0.12.0",
+ "cu29-traits 0.12.0",
+ "cu29-value 0.12.0",
+ "serde",
+ "smallvec",
+ "strfmt",
+]
+
+[[package]]
+name = "cu29-log"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6bafd7bb9fae851a60c481a33c44b7f4bc2af4548c8287fb077cef3bfc3e2625"
+dependencies = [
+ "cu-bincode",
+ "cu29-clock 1.2.0",
+ "cu29-traits 1.2.0",
+ "cu29-value 1.2.0",
  "serde",
  "smallvec",
  "strfmt",
@@ -1614,12 +1841,27 @@ name = "cu29-log-derive"
 version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
- "cu29-intern-strs",
- "cu29-log",
+ "cu29-intern-strs 0.12.0",
+ "cu29-log 0.12.0",
  "proc-macro-crate",
  "proc-macro2",
  "quote",
  "syn 2.0.117",
+]
+
+[[package]]
+name = "cu29-log-derive"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55f9e2f9c5f3de478f7bc60a27133e81832bdb7f7244c88c8080dad74c9edf40"
+dependencies = [
+ "cu29-build",
+ "cu29-intern-strs 1.2.0",
+ "cu29-log 1.2.0",
+ "proc-macro-crate",
+ "proc-macro2",
+ "quote",
+ "syn 3.0.5",
 ]
 
 [[package]]
@@ -1628,13 +1870,41 @@ version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "cu-bincode",
- "cu29-clock",
- "cu29-log",
- "cu29-traits",
+ "cu29-clock 0.12.0",
+ "cu29-log 0.12.0",
+ "cu29-traits 0.12.0",
  "log",
  "smallvec",
  "spin 0.10.0",
  "strfmt",
+]
+
+[[package]]
+name = "cu29-log-runtime"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef7524a520f555454b09f6505b8413a02cea0560d3022532ac5f5a6e31042952"
+dependencies = [
+ "cu-bincode",
+ "cu29-build",
+ "cu29-clock 1.2.0",
+ "cu29-log 1.2.0",
+ "cu29-traits 1.2.0",
+ "log",
+ "smallvec",
+ "spin 0.12.3",
+ "strfmt",
+]
+
+[[package]]
+name = "cu29-reflect-derive"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bf344681facbc48078cb809eca3a3be051652148ac2ba7a5160f3bef64d85485"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.5",
 ]
 
 [[package]]
@@ -1644,15 +1914,15 @@ source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9
 dependencies = [
  "arrayvec",
  "clap",
- "compact_str",
+ "compact_str 0.9.0",
  "cu-bincode",
- "cu29-clock",
- "cu29-log",
- "cu29-log-derive",
- "cu29-log-runtime",
- "cu29-traits",
- "cu29-unifiedlog",
- "cu29-value",
+ "cu29-clock 0.12.0",
+ "cu29-log 0.12.0",
+ "cu29-log-derive 0.12.0",
+ "cu29-log-runtime 0.12.0",
+ "cu29-traits 0.12.0",
+ "cu29-unifiedlog 0.12.0",
+ "cu29-value 0.12.0",
  "erased-serde",
  "hashbrown 0.16.1",
  "html-escape",
@@ -1673,6 +1943,48 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu29-runtime"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e1d83f12b9e4fb1b91c19a47a23ba4429231f6d51bc6155cabc612c49a08e1d5"
+dependencies = [
+ "arrayvec",
+ "bevy_reflect",
+ "clap",
+ "compact_str 0.10.0",
+ "cu-bincode",
+ "cu29-build",
+ "cu29-clock 1.2.0",
+ "cu29-log 1.2.0",
+ "cu29-log-derive 1.2.0",
+ "cu29-log-runtime 1.2.0",
+ "cu29-reflect-derive",
+ "cu29-traits 1.2.0",
+ "cu29-unifiedlog 1.2.0",
+ "cu29-units",
+ "cu29-value 1.2.0",
+ "erased-serde",
+ "hashbrown 0.17.0",
+ "html-escape",
+ "layout-rs",
+ "libm",
+ "memmap2",
+ "object-pool",
+ "paste",
+ "petgraph",
+ "portable-atomic",
+ "rayon",
+ "ron",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "smallvec",
+ "spin 0.12.3",
+ "svg",
+ "tempfile",
+]
+
+[[package]]
 name = "cu29-soa-derive"
 version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
@@ -1682,15 +1994,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu29-soa-derive"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "34347c689c809172aa6d7f120ab27e24bb440cbeac4ae323b4961d3b9477ca50"
+dependencies = [
+ "quote",
+ "syn 3.0.5",
+]
+
+[[package]]
 name = "cu29-traits"
 version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
- "compact_str",
+ "compact_str 0.9.0",
  "cu-bincode",
- "cu29-clock",
+ "cu29-clock 0.12.0",
  "erased-serde",
  "serde",
+]
+
+[[package]]
+name = "cu29-traits"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "39e51923b14e0ca6c773e32c3503e021d9828dcadc298a1c4fb95f4a0742e674"
+dependencies = [
+ "bevy_reflect",
+ "compact_str 0.10.0",
+ "cu-bincode",
+ "cu29-clock 1.2.0",
+ "erased-serde",
+ "serde",
+ "spin 0.12.3",
 ]
 
 [[package]]
@@ -1699,10 +2036,36 @@ version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "cu-bincode",
- "cu29-traits",
+ "cu29-traits 0.12.0",
  "memmap2",
  "page_size",
  "spin 0.10.0",
+]
+
+[[package]]
+name = "cu29-unifiedlog"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84c8f2b84e0e0dc5e90c4db2f2c64914c95b61c19de100119a7d936fa9388f79"
+dependencies = [
+ "cu-bincode",
+ "cu29-traits 1.2.0",
+ "memmap2",
+ "page_size",
+ "spin 0.12.3",
+]
+
+[[package]]
+name = "cu29-units"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7ccfa3f4c793b7954ad2f0f6a5aea3799499f5c8c4ed821a31e9c6d12a2dd067"
+dependencies = [
+ "bevy_reflect",
+ "cu-bincode",
+ "cu29-traits 1.2.0",
+ "serde",
+ "uom 0.38.0",
 ]
 
 [[package]]
@@ -1711,7 +2074,19 @@ version = "0.12.0"
 source = "git+https://github.com/matthewashton-k/copper-rs.git?branch=master#8d9bac20b58e734c52353eb348ece86c3e669aed"
 dependencies = [
  "cu-bincode",
- "cu29-clock",
+ "cu29-clock 0.12.0",
+ "ordered-float",
+ "serde",
+]
+
+[[package]]
+name = "cu29-value"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e64a5dbecdb3501ae8a1c68253b91683e005bcded711661e3e2924eb0be509be"
+dependencies = [
+ "cu-bincode",
+ "cu29-clock 1.2.0",
  "ordered-float",
  "serde",
 ]
@@ -1884,6 +2259,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "disqualified"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c9c272297e804878a2a4b707cfcfc6d2328b5bb936944613b4fdf2b9269afdfd"
+
+[[package]]
 name = "dlib"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1906,6 +2287,12 @@ name = "downcast-rs"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75b325c5dbd37f80359721ad39aca5a29fb04c89279657cffdda8736d0c0b9d2"
+
+[[package]]
+name = "downcast-rs"
+version = "2.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "117240f60069e65410b3ae1bb213295bd828f707b5bec6596a1afc8793ce0cbc"
 
 [[package]]
 name = "dpi"
@@ -2401,10 +2788,23 @@ version = "0.21.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0071fe88dba8e40086c8ff9bbb62622999f49628344b1d1bf490a48a29d80f22"
 dependencies = [
- "glib-sys",
- "gobject-sys",
+ "glib-sys 0.21.5",
+ "gobject-sys 0.21.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "gio-sys"
+version = "0.22.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c28739f914c15b87a9856000bed9cbd5b3a8afbca5e982d9a299e1601422cb5"
+dependencies = [
+ "glib-sys 0.22.9",
+ "gobject-sys 0.22.9",
+ "libc",
+ "system-deps 9.0.0",
  "windows-sys 0.61.2",
 ]
 
@@ -2582,6 +2982,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "glam"
+version = "0.33.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e762b9b188634fc508d4ec54b62ea3d352c43fd431d18d05d46f559f217f4725"
+
+[[package]]
 name = "glib"
 version = "0.21.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2593,10 +2999,31 @@ dependencies = [
  "futures-executor",
  "futures-task",
  "futures-util",
- "gio-sys",
- "glib-macros",
- "glib-sys",
- "gobject-sys",
+ "gio-sys 0.21.5",
+ "glib-macros 0.21.5",
+ "glib-sys 0.21.5",
+ "gobject-sys 0.21.5",
+ "libc",
+ "memchr",
+ "smallvec",
+]
+
+[[package]]
+name = "glib"
+version = "0.22.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "18b9b8d350db41f690ec1b87109f202782748bbd8ab2f2ede17cb40d29e2838c"
+dependencies = [
+ "bitflags 2.11.0",
+ "futures-channel",
+ "futures-core",
+ "futures-executor",
+ "futures-task",
+ "futures-util",
+ "gio-sys 0.22.9",
+ "glib-macros 0.22.9",
+ "glib-sys 0.22.9",
+ "gobject-sys 0.22.9",
  "libc",
  "memchr",
  "smallvec",
@@ -2616,13 +3043,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "glib-macros"
+version = "0.22.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c9597c68fa7bdf4154a3079642cd21c4dccac0b0bdd2897d82861523bf91e7b9"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "syn 3.0.5",
+]
+
+[[package]]
 name = "glib-sys"
 version = "0.21.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d95e1a3a19ae464a7286e14af9a90683c64d70c02532d88d87ce95056af3e6c"
 dependencies = [
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+]
+
+[[package]]
+name = "glib-sys"
+version = "0.22.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "99b38907e67e40dec9b60f858bcada952598719cb512a13eb13d6cdcd16f8295"
+dependencies = [
+ "libc",
+ "system-deps 9.0.0",
 ]
 
 [[package]]
@@ -2715,9 +3164,20 @@ version = "0.21.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dca35da0d19a18f4575f3cb99fe1c9e029a2941af5662f326f738a21edaf294"
 dependencies = [
- "glib-sys",
+ "glib-sys 0.21.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+]
+
+[[package]]
+name = "gobject-sys"
+version = "0.22.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "07595c9ba696bd9819cb6a8df39f08078f3dd679508fe052dd558492c2053834"
+dependencies = [
+ "glib-sys 0.22.9",
+ "libc",
+ "system-deps 9.0.0",
 ]
 
 [[package]]
@@ -2832,9 +3292,34 @@ dependencies = [
  "futures-channel",
  "futures-core",
  "futures-util",
- "glib",
- "gstreamer-sys",
+ "glib 0.21.5",
+ "gstreamer-sys 0.24.5",
  "itertools 0.14.0",
+ "kstring",
+ "libc",
+ "muldiv",
+ "num-integer",
+ "num-rational",
+ "option-operations",
+ "pastey",
+ "pin-project-lite",
+ "smallvec",
+ "thiserror 2.0.18",
+]
+
+[[package]]
+name = "gstreamer"
+version = "0.25.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab4527e1b9bae8d29ce137bde5b8eec8ae8f78f13ad00fc6e70cbe227d6ad027"
+dependencies = [
+ "cfg-if",
+ "futures-channel",
+ "futures-core",
+ "futures-util",
+ "glib 0.22.9",
+ "gstreamer-sys 0.25.2",
+ "itertools 0.15.0",
  "kstring",
  "libc",
  "muldiv",
@@ -2855,10 +3340,25 @@ checksum = "3da7017b2a2fa5cdf9123b1603947ea24174f6d8cea0ea673411df824c811921"
 dependencies = [
  "futures-core",
  "futures-sink",
- "glib",
- "gstreamer",
- "gstreamer-app-sys",
- "gstreamer-base",
+ "glib 0.21.5",
+ "gstreamer 0.24.5",
+ "gstreamer-app-sys 0.24.5",
+ "gstreamer-base 0.24.5",
+ "libc",
+]
+
+[[package]]
+name = "gstreamer-app"
+version = "0.25.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "97f8ae9238c2352398dcc084de28df3f7099af216ac6c160b52318d23f25c010"
+dependencies = [
+ "futures-core",
+ "futures-sink",
+ "glib 0.22.9",
+ "gstreamer 0.25.3",
+ "gstreamer-app-sys 0.25.0",
+ "gstreamer-base 0.25.3",
  "libc",
 ]
 
@@ -2868,11 +3368,24 @@ version = "0.24.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4fa9f1b12b546aea543c15a0fdbc5a53617902a74f6d357a32b6a9fb4bc4725c"
 dependencies = [
- "glib-sys",
- "gstreamer-base-sys",
- "gstreamer-sys",
+ "glib-sys 0.21.5",
+ "gstreamer-base-sys 0.24.5",
+ "gstreamer-sys 0.24.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+]
+
+[[package]]
+name = "gstreamer-app-sys"
+version = "0.25.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a74a8211e5d7df2f45b612c284ddf56b92bdf4e879e8ed72e7c46dd0842e158"
+dependencies = [
+ "glib-sys 0.22.9",
+ "gstreamer-base-sys 0.25.3",
+ "gstreamer-sys 0.25.2",
+ "libc",
+ "system-deps 7.0.8",
 ]
 
 [[package]]
@@ -2883,9 +3396,23 @@ checksum = "9375f9a12120a8ee17b765c816c9b23861ce258def77b0ee40a05acb00c74972"
 dependencies = [
  "atomic_refcell",
  "cfg-if",
- "glib",
- "gstreamer",
- "gstreamer-base-sys",
+ "glib 0.21.5",
+ "gstreamer 0.24.5",
+ "gstreamer-base-sys 0.24.5",
+ "libc",
+]
+
+[[package]]
+name = "gstreamer-base"
+version = "0.25.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c91c94a4d3047d05dd6e1f6d91c74f61f56384c7ea1c9d0c1051572eeeb0138d"
+dependencies = [
+ "atomic_refcell",
+ "cfg-if",
+ "glib 0.22.9",
+ "gstreamer 0.25.3",
+ "gstreamer-base-sys 0.25.3",
  "libc",
 ]
 
@@ -2895,11 +3422,24 @@ version = "0.24.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1b844f3559b6ab0379b4b771261643783ae4e0ffa71d5f5f46e33b7acf66b752"
 dependencies = [
- "glib-sys",
- "gobject-sys",
- "gstreamer-sys",
+ "glib-sys 0.21.5",
+ "gobject-sys 0.21.5",
+ "gstreamer-sys 0.24.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+]
+
+[[package]]
+name = "gstreamer-base-sys"
+version = "0.25.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "709fbbc623dc066908ba10c43d629c21096508dea04796592a206c4edd864e37"
+dependencies = [
+ "glib-sys 0.22.9",
+ "gobject-sys 0.22.9",
+ "gstreamer-sys 0.25.2",
+ "libc",
+ "system-deps 7.0.8",
 ]
 
 [[package]]
@@ -2909,10 +3449,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b5d37c1a599ae57b8186948bd5699f2dbfc044baea9d400228b489a85bcf2759"
 dependencies = [
  "cfg-if",
- "glib-sys",
- "gobject-sys",
+ "glib-sys 0.21.5",
+ "gobject-sys 0.21.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
+]
+
+[[package]]
+name = "gstreamer-sys"
+version = "0.25.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "533fa8d28fc830eafccbcfcfddb390563ea5d3a351af2c3aab99e197e5f5b1ba"
+dependencies = [
+ "cfg-if",
+ "glib-sys 0.22.9",
+ "gobject-sys 0.22.9",
+ "libc",
+ "system-deps 7.0.8",
 ]
 
 [[package]]
@@ -2923,9 +3476,9 @@ checksum = "72d9ba5295b206563a990a087c6541d57f650dcd4be4ca8a5a149a758e8df8a0"
 dependencies = [
  "cfg-if",
  "futures-channel",
- "glib",
- "gstreamer",
- "gstreamer-base",
+ "glib 0.21.5",
+ "gstreamer 0.24.5",
+ "gstreamer-base 0.24.5",
  "gstreamer-video-sys",
  "libc",
  "thiserror 2.0.18",
@@ -2937,12 +3490,12 @@ version = "0.24.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20236fa412d7a50e59aa234b46828a99e3e5f06c4f80d271a49ecd2a1d3bfcbe"
 dependencies = [
- "glib-sys",
- "gobject-sys",
- "gstreamer-base-sys",
- "gstreamer-sys",
+ "glib-sys 0.21.5",
+ "gobject-sys 0.21.5",
+ "gstreamer-base-sys 0.24.5",
+ "gstreamer-sys 0.24.5",
  "libc",
- "system-deps",
+ "system-deps 7.0.8",
 ]
 
 [[package]]
@@ -3026,6 +3579,13 @@ name = "hashbrown"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4f467dd6dccf739c208452f8014c75c18bb8301b050ad1cfb27153803edb0f51"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
+ "serde",
+ "serde_core",
+]
 
 [[package]]
 name = "heapless"
@@ -3207,7 +3767,7 @@ dependencies = [
  "common",
  "cu-bincode",
  "iceoryx2",
- "nalgebra",
+ "nalgebra 0.34.2",
  "serde",
  "serde-big-array",
 ]
@@ -3659,6 +4219,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3819,7 +4388,7 @@ name = "kfilter"
 version = "0.4.0"
 source = "git+https://github.com/utahrobotics/kfilter.git#d3b54f9136f9a79824a019fa08c0c35444225bc4"
 dependencies = [
- "nalgebra",
+ "nalgebra 0.34.2",
 ]
 
 [[package]]
@@ -4059,7 +4628,7 @@ dependencies = [
  "bonsai-bt",
  "bytemuck",
  "bytes",
- "circular-buffer",
+ "circular-buffer 1.2.0",
  "cobs 0.5.1",
  "colorous",
  "common",
@@ -4069,16 +4638,16 @@ dependencies = [
  "cu-apriltag",
  "cu-bincode",
  "cu-gstreamer",
- "cu-sensor-payloads",
- "cu-spatial-payloads",
- "cu29",
+ "cu-sensor-payloads 1.2.0",
+ "cu-spatial-payloads 1.2.0",
+ "cu29 1.2.0",
  "cu29-export",
  "cu29-helpers",
- "cu29-runtime",
+ "cu29-runtime 1.2.0",
  "embedded_common",
  "futures-util",
- "gstreamer",
- "gstreamer-app",
+ "gstreamer 0.24.5",
+ "gstreamer-app 0.24.5",
  "gstreamer-video",
  "iceoryx-types",
  "iceoryx2",
@@ -4086,7 +4655,7 @@ dependencies = [
  "launcher",
  "mio",
  "mujoco-rs",
- "nalgebra",
+ "nalgebra 0.34.2",
  "quic",
  "rand 0.9.3",
  "rayon",
@@ -4351,7 +4920,21 @@ dependencies = [
  "num-rational",
  "num-traits",
  "serde",
- "simba",
+ "simba 0.9.1",
+ "typenum",
+]
+
+[[package]]
+name = "nalgebra"
+version = "0.35.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "adc43a60c217b0c6ff46e47f26911015ad8d2e5a8be1af668c67e370d99a4346"
+dependencies = [
+ "approx",
+ "num-complex",
+ "num-rational",
+ "num-traits",
+ "simba 0.10.2",
  "typenum",
 ]
 
@@ -4652,15 +5235,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.117",
-]
-
-[[package]]
-name = "num_threads"
-version = "0.1.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c7398b9c8b70908f6371f47ed36737907c87c52af34c268fed0bf0ceb92ead9"
-dependencies = [
- "libc",
 ]
 
 [[package]]
@@ -5185,9 +5759,9 @@ checksum = "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd"
 
 [[package]]
 name = "pkg-config"
-version = "0.3.32"
+version = "0.3.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7edddbd0b52d732b21ad9a5fab5c704c14cd949e5e9a1ec5929a24fded1b904c"
+checksum = "f6b464fbc74e149a392436b17d523f769e057cb6877f6a5c4618bc6f11800548"
 
 [[package]]
 name = "plain"
@@ -6345,7 +6919,7 @@ dependencies = [
  "fxhash",
  "iceoryx-types",
  "iceoryx2",
- "nalgebra",
+ "nalgebra 0.34.2",
  "parking_lot",
  "realsense-rust",
  "serde",
@@ -6947,6 +7521,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "simba"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f1a7200d82ff1c7b4235efd12f11e2537a402c91cf83a5cb97ce80eef787fde7"
+dependencies = [
+ "approx",
+ "num-complex",
+ "num-traits",
+]
+
+[[package]]
 name = "simd-adler32"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6993,7 +7578,7 @@ name = "simple-icp"
 version = "0.2.0"
 source = "git+https://github.com/utahrobotics/simple-icp.git#5b65d5b4d657935e9015cc7b265bf23d31568fe2"
 dependencies = [
- "nalgebra",
+ "nalgebra 0.34.2",
  "serde",
 ]
 
@@ -7002,20 +7587,9 @@ name = "simple-motion"
 version = "0.1.0"
 dependencies = [
  "crossbeam",
- "nalgebra",
+ "nalgebra 0.34.2",
  "ron",
  "serde",
-]
-
-[[package]]
-name = "simplelog"
-version = "0.12.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16257adbfaef1ee58b1363bdc0664c9b8e1e30aed86049635fb5f147d065a9c0"
-dependencies = [
- "log",
- "termcolor",
- "time",
 ]
 
 [[package]]
@@ -7105,6 +7679,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d5fe4ccb98d9c292d56fec89a5e07da7fc4cf0dc11e156b41793132775d3e591"
 dependencies = [
  "lock_api",
+ "portable-atomic",
+]
+
+[[package]]
+name = "spin"
+version = "0.12.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0134f9043ed38b087ac4f7d4af44c79e2c9e5094421fe3164f435ce585953b10"
+dependencies = [
+ "lock_api",
 ]
 
 [[package]]
@@ -7181,6 +7765,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "syn"
+version = "3.0.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "12df2e0110f65b775f769bb17ef989067a1d931b2eb822bd4346631eeada89f9"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-ident",
+]
+
+[[package]]
 name = "sync_wrapper"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7216,6 +7811,19 @@ name = "system-deps"
 version = "7.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "396a35feb67335377e0251fcbc1092fc85c484bd4e3a7a54319399da127796e7"
+dependencies = [
+ "cfg-expr",
+ "heck",
+ "pkg-config",
+ "toml 1.1.2+spec-1.1.0",
+ "version-compare",
+]
+
+[[package]]
+name = "system-deps"
+version = "9.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8a0dae2cbca1f0ff93795713cfe0a4c02f760e3c0b8ae2ab4ec4045808ff429f"
 dependencies = [
  "cfg-expr",
  "heck",
@@ -7327,9 +7935,7 @@ checksum = "743bd48c283afc0388f9b8827b976905fb217ad9e647fae3a379a9283c4def2c"
 dependencies = [
  "deranged",
  "itoa",
- "libc",
  "num-conv",
- "num_threads",
  "powerfmt",
  "serde_core",
  "time-core",
@@ -7863,6 +8469,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "uom"
+version = "0.38.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a739f83872836c82a4f2527d4e54b37007b3de68cafe7edde95fd695968bf4b9"
+dependencies = [
+ "num-bigint",
+ "num-complex",
+ "num-rational",
+ "num-traits",
+ "serde_core",
+ "typenum",
+]
+
+[[package]]
 name = "ureq"
 version = "2.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7919,6 +8539,17 @@ dependencies = [
  "js-sys",
  "serde_core",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "variadics_please"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "41b6d82be61465f97d42bd1d15bf20f3b0a3a0905018f38f9d6f6962055b0b5c"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
 ]
 
 [[package]]
@@ -8152,7 +8783,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2857dd20b54e916ec7253b3d6b4d5c4d7d4ca2c33c2e11c6c76a99bd8744755d"
 dependencies = [
  "cc",
- "downcast-rs",
+ "downcast-rs 1.2.1",
  "rustix 1.1.4",
  "scoped-tls",
  "smallvec",
@@ -8459,7 +9090,7 @@ dependencies = [
  "bytemuck",
  "cu-bincode",
  "futures",
- "nalgebra",
+ "nalgebra 0.34.2",
  "pollster",
  "serde",
  "thiserror 2.0.18",
