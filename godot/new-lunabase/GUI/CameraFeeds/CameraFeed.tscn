@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://rlkcpoyn2ce0"]
+
+[ext_resource type="Script" uid="uid://co5o6siptxert" path="res://GUI/CameraFeeds/camera_feed.gd" id="1_bnpgg"]
+
+[node name="CameraFeed" type="Node2D" unique_id=1448640309]
+script = ExtResource("1_bnpgg")
+
+[node name="CameraStream" type="CameraStream" parent="." unique_id=1848480802]
+
+[node name="Button" type="Button" parent="." unique_id=1154772291]
+offset_left = 357.0
+offset_top = 445.0
+offset_right = 616.0
+offset_bottom = 536.0
+text = "connect"
+
+[node name="Button2" type="Button" parent="." unique_id=2056703976]
+offset_left = 624.0
+offset_top = 437.0
+offset_right = 862.0
+offset_bottom = 545.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=930463599]
+offset_left = 333.0
+offset_top = 133.0
+offset_right = 820.0
+offset_bottom = 448.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

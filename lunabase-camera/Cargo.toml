@@ -1,0 +1,12 @@
+[package]
+name = "lunabase-camera"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features = ["lazy-function-tables", "api-4-6"] }
+common = { path = "../common" }
+ffmpeg-next = "8.1.0"
+
+[lib]
+crate-type = ["cdylib"] # Compile this crate to a dynamic C library.

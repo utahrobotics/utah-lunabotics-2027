@@ -246,6 +246,7 @@ size_flags_vertical = 3
 
 [node name="ArenaMap" parent="VBoxContainer/MainContent/HBoxContainer/CenterColumn/Map Panel" unique_id=1557496579 instance=ExtResource("6_moxsj")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 
 [node name="UIAttitude" parent="VBoxContainer/MainContent/HBoxContainer/CenterColumn" unique_id=1693065779 instance=ExtResource("4_3r4oj")]
@@ -404,4 +405,20 @@ text = "Dump
 [node name="LunabaseHumanController" type="Node" parent="." unique_id=1500504990]
 script = ExtResource("2")
 
+[node name="CameraStream" type="CameraStream" parent="." unique_id=2025454447]
+
+[node name="CamButtonConnect" type="Button" parent="." unique_id=153228444]
+layout_mode = 0
+offset_top = 518.0
+offset_right = 208.0
+offset_bottom = 690.0
+
+[node name="cams" type="TextureRect" parent="." unique_id=1716994382]
+layout_mode = 0
+offset_left = 303.0
+offset_top = 59.0
+offset_right = 938.0
+offset_bottom = 429.0
+
 [connection signal="value_changed" from="VBoxContainer/MainContent/HBoxContainer/RightColumn/SpeedControl/MarginContainer/VBox/SpeedMultiplierSlider" to="." method="_on_speed_multiplier_slider_value_changed"]
+[connection signal="pressed" from="CamButtonConnect" to="." method="_on_cam_button_connect_pressed"]
