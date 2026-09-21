@@ -25,18 +25,14 @@ Here's the flow for code under regular conditions:
 Ongoing projects may have persistent branches that are synced with main through PRs, but this
 should be limited.
 
-Squash merges are not recommended, but this may change in the future.
-
 Code owners also have the power to force merge PRs, which should be used in limited scenarios.  
 &nbsp;&nbsp;&rdsh; *Why would you do that?* See [Appendix A](#appendix-a)
 
-### Git
-
-* Keep branch names descriptive and concise. 
-* Use kebab case for branch names, for example `hbarber/fix-stupid-broken-thing`
-* After merging a PR, please delete any associated feature branches
+* Keep branch names descriptive and concise.
+* Use kebab case for branch names, for example `fix-stupid-broken-thing`
+* Squash merges are not recommended, but this may change in the future.
+* After merging a PR, please delete any associated feature branches, unless you're merging from an ongoing branch.
 * If you want eyes on your code but it isn't ready for production yet, create a draft PR!
-
 
 ## Code style
 
