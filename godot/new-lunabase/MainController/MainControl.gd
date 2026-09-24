@@ -242,5 +242,6 @@ func _on_ip_input_gui_input(event: InputEvent) -> void:
 
 func _on_cam_button_connect_pressed() -> void:
 	print("BUTTON PRESSED")
-	cam_stream.connect_camera("192.168.0.100:4002")
+	#cam_stream.connect_camera("192.168.0.100:4002")
+	cam_stream.connect_camera("127.0.0.1:4002")
 	isCamOn = true
