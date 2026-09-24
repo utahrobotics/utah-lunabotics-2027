@@ -13,6 +13,16 @@ const GAMEPAD_BUTTONS := {
 	"d_pad_up": 11,
 }
 
+const GAMEPAD_AXES := {
+	"left_stick_left": [0, -1.0],
+	"left_stick_right": [0, 1.0],
+	"left_stick_up": [1, -1.0],
+	"left_stick_down": [1, 1.0],
+
+	"left_trigger": [4, 1.0],
+	"right_trigger": [5, 1.0],
+}
+
 const FLAGS_KEY := "flags"
 const DEFAULT_FLAGS := {
 	"apply_steering_axis_deadzone": true,
@@ -201,11 +211,12 @@ static func _token_to_event(token: String) -> InputEvent:
 			b.button_index = GAMEPAD_BUTTONS[button_name]
 			return b
 	if token.begins_with("gamepad_axis_"):
-		var tail := token.trim_prefix("gamepad_axis_")
-		var bits := tail.split("_")
-		if bits.size() >= 2:
+		var axis_name = token.trim_prefix("gamepad_axis_")
+
+		if GAMEPAD_AXES.has(axis_name):
+			var axis_data = GAMEPAD_AXES[axis_name]
 			var m := InputEventJoypadMotion.new()
-			m.axis = int(bits[0])
-			m.axis_value = 1.0 if bits[1] == "positive" else -1.0
+			m.axis = axis_data[0]
+			m.axis_value = axis_data[1]
 			return m
 	return null
