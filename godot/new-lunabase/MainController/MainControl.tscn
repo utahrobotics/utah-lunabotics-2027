@@ -8,9 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dhg4sb4ifrvh8" path="res://GUI/PitchAndRollProposal/Testing/FlightSim/UIAttitude/UIAttitude.tscn" id="4_3r4oj"]
 [ext_resource type="PackedScene" uid="uid://buo5ncrpuluwh" path="res://GUI/ArenaMap/ArenaMap.tscn" id="6_moxsj"]
 [ext_resource type="Script" uid="uid://bgn22i7ngljkr" path="res://MainController/maps_option_button.gd" id="7_xxe4i"]
-[ext_resource type="Texture2D" uid="uid://bjwlx7ar673ff" path="res://icon.svg" id="9_548jp"]
-
-[sub_resource type="Theme" id="Theme_xywh6"]
+[ext_resource type="PackedScene" uid="uid://eg1ustne464u" path="res://GUI/CameraFeeds/camstream.tscn" id="9_548jp"]
 
 [node name="MainControl" type="Control" unique_id=1904223292]
 layout_mode = 3
@@ -408,23 +406,9 @@ text = "Dump
 [node name="LunabaseHumanController" type="Node" parent="." unique_id=1500504990]
 script = ExtResource("2")
 
-[node name="CameraStream" type="CameraStream" parent="." unique_id=2025454447]
+[node name="FrontCam" type="CameraStream" parent="." unique_id=2025454447]
 
-[node name="CamButtonConnect" type="Button" parent="." unique_id=153228444]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 545.0
-offset_right = 209.0
-offset_bottom = 674.0
-theme = SubResource("Theme_xywh6")
-
-[node name="cams" type="TextureRect" parent="." unique_id=1716994382]
-layout_mode = 0
-offset_left = 294.0
-offset_top = 79.0
-offset_right = 929.0
-offset_bottom = 411.0
-texture = ExtResource("9_548jp")
+[node name="Cams" parent="." unique_id=1240263653 instance=ExtResource("9_548jp")]
+visible = false
 
 [connection signal="value_changed" from="VBoxContainer/MainContent/HBoxContainer/RightColumn/SpeedControl/MarginContainer/VBox/SpeedMultiplierSlider" to="." method="_on_speed_multiplier_slider_value_changed"]
-[connection signal="pressed" from="CamButtonConnect" to="." method="_on_cam_button_connect_pressed"]

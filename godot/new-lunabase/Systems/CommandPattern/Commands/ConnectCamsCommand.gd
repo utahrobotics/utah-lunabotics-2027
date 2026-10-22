@@ -4,7 +4,7 @@ extends Command
 @export var address: String = "127.0.0.1:4002"
 
 func execute(actor: Node) -> void:
-	if actor.has_method("connect_camera"):
+	if actor.has_method("toggle_cam"):
 		actor.connect_camera(address)
 	else:
 		push_error("Actor does not have connect_camera method")

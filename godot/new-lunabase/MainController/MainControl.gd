@@ -11,9 +11,7 @@ extends Control
 @onready var dig_button: Button = $VBoxContainer/BottomBar/MarginContainer/BottomPanel/DigButton
 @onready var dump_button: Button = $VBoxContainer/BottomBar/MarginContainer/BottomPanel/DumpButton
 
-@onready var cam_stream:= $CameraStream
-@onready var cam_button:= $CamButtonConnect
-@onready var camtext:= $cams
+
 @onready var manual_button: Button = $VBoxContainer/BottomBar/MarginContainer/BottomPanel/ManualButton
 @onready var autonomous_button: Button = $VBoxContainer/BottomBar/MarginContainer/BottomPanel/AutonomousButton
 @onready var errored_tasks_label: Label = $VBoxContainer/MainContent/HBoxContainer/LeftColumn/ErrorsPanel/MarginContainer/VBox/ScrollContainer/ErroredTasksLabel
@@ -77,9 +75,7 @@ func _process(delta: float) -> void:
 	var ms_since_packet: int = GlobalLunabaseConnection.get_ms_since_last_packet()
 	var packet_time_sec: float = ms_since_packet / 1000.0
 	
-	if isCamOn:
-		cam_stream.get_texture(camtext)
-	
+
 	# Format time text
 	var time_text: String
 	if packet_time_sec < 1.0:
@@ -238,10 +234,3 @@ func _on_ip_input_gui_input(event: InputEvent) -> void:
 	if caret < ip_input.text.length():
 		ip_input.delete_text(caret, caret + 1)
 	accept_event()
-
-
-func _on_cam_button_connect_pressed() -> void:
-	print("BUTTON PRESSED")
-	#cam_stream.connect_camera("192.168.0.100:4002")
-	cam_stream.connect_camera("127.0.0.1:4002")
-	isCamOn = true

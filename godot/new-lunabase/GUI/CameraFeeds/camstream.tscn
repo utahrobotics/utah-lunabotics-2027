@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://eg1ustne464u"]
+
+[ext_resource type="Script" uid="uid://dqvktbgm2s07c" path="res://GUI/CameraFeeds/camstream.gd" id="1_ktltp"]
+[ext_resource type="Script" uid="uid://bcx4463ttch53" path="res://GUI/CameraFeeds/cam_scripts/front_cam.gd" id="2_w40kg"]
+[ext_resource type="Texture2D" uid="uid://bjwlx7ar673ff" path="res://icon.svg" id="3_fwfk1"]
+[ext_resource type="Script" uid="uid://dncq8q546pi5g" path="res://GUI/CameraFeeds/cam_scripts/obstacle_map_cam.gd" id="4_fwfk1"]
+[ext_resource type="Script" uid="uid://bu352pvryfn0k" path="res://GUI/CameraFeeds/cam_scripts/t_265_left_map_cam.gd" id="5_as2so"]
+[ext_resource type="Script" uid="uid://breickkfhk0e7" path="res://GUI/CameraFeeds/cam_scripts/t_265_right_map_cam.gd" id="6_ekb00"]
+[ext_resource type="Script" uid="uid://dfymgn5skkigp" path="res://GUI/CameraFeeds/cam_scripts/realsense_front.gd" id="7_ntluv"]
+[ext_resource type="Script" uid="uid://dp6adb5q18ga" path="res://GUI/CameraFeeds/cam_scripts/t_265_front.gd" id="8_j5vgx"]
+[ext_resource type="Script" uid="uid://bww362o4yqie6" path="res://GUI/CameraFeeds/cam_scripts/dig.gd" id="9_hixx3"]
+
+[node name="Cams" type="Node2D" unique_id=1240263653]
+script = ExtResource("1_ktltp")
+
+[node name="FrontCam" type="CameraStream" parent="." unique_id=1348147957]
+script = ExtResource("2_w40kg")
+
+[node name="FrontCamImage" type="TextureRect" parent="FrontCam" unique_id=1445969233]
+offset_left = 254.0
+offset_right = 594.0
+offset_bottom = 200.0
+texture = ExtResource("3_fwfk1")
+
+[node name="FrontCamShutoff" type="CheckButton" parent="FrontCam" unique_id=646000079]
+offset_left = 112.0
+offset_top = 79.0
+offset_right = 237.0
+offset_bottom = 150.0
+text = "FrontCam"
+
+[node name="ObstacleMapCam" type="CameraStream" parent="." unique_id=186746629]
+script = ExtResource("4_fwfk1")
+
+[node name="ObstacleMapImage" type="TextureRect" parent="ObstacleMapCam" unique_id=637648968]
+offset_left = 586.0
+offset_top = 4.0
+offset_right = 926.0
+offset_bottom = 204.0
+texture = ExtResource("3_fwfk1")
+
+[node name="ObstacleMapShutoff" type="CheckButton" parent="ObstacleMapCam" unique_id=470804469]
+offset_left = 952.0
+offset_top = 90.0
+offset_right = 1157.0
+offset_bottom = 121.0
+text = "ObstacleMap Shutof
+"
+
+[node name="T265LeftMapCam" type="CameraStream" parent="." unique_id=1193133348]
+script = ExtResource("5_as2so")
+
+[node name="T265LeftMapCam" type="TextureRect" parent="T265LeftMapCam" unique_id=1162131074]
+anchors_preset = -1
+anchor_right = 0.033
+anchor_bottom = 0.057000004
+offset_left = 437.0
+offset_top = 570.0
+offset_right = 733.4
+offset_bottom = 698.0
+texture = ExtResource("3_fwfk1")
+
+[node name="T265LeftMapShutoff" type="CheckButton" parent="T265LeftMapCam" unique_id=1279265622]
+offset_left = 762.0
+offset_top = 606.0
+offset_right = 972.0
+offset_bottom = 685.0
+text = "T265LeftMap Shutoff
+"
+
+[node name="T265RightMapCam" type="CameraStream" parent="." unique_id=1049028958]
+script = ExtResource("6_ekb00")
+
+[node name="T265RightMapCam" type="TextureRect" parent="T265RightMapCam" unique_id=1869401423]
+anchors_preset = -1
+offset_left = 592.0
+offset_top = 393.0
+offset_right = 932.0
+offset_bottom = 593.0
+texture = ExtResource("3_fwfk1")
+
+[node name="T265RightMapCamToggle" type="CheckButton" parent="T265RightMapCam" unique_id=1105019450]
+offset_left = 942.0
+offset_top = 405.0
+offset_right = 1140.0
+offset_bottom = 479.0
+text = "T265RightMap Cam"
+
+[node name="RealsenseFront" type="CameraStream" parent="." unique_id=213766461]
+script = ExtResource("7_ntluv")
+
+[node name="RealsenseFront" type="TextureRect" parent="RealsenseFront" unique_id=421718981]
+offset_left = 256.0
+offset_top = 389.0
+offset_right = 596.0
+offset_bottom = 589.0
+texture = ExtResource("3_fwfk1")
+
+[node name="RealsenseFrontToggle" type="CheckButton" parent="RealsenseFront" unique_id=369314232]
+offset_left = 82.0
+offset_top = 418.0
+offset_right = 247.0
+offset_bottom = 495.0
+text = "Realsense Cam
+"
+
+[node name="T265Front" type="CameraStream" parent="." unique_id=1671296264]
+script = ExtResource("8_j5vgx")
+
+[node name="T265FrontImg" type="TextureRect" parent="T265Front" unique_id=1363581987]
+offset_left = 588.0
+offset_top = 201.0
+offset_right = 928.0
+offset_bottom = 401.0
+texture = ExtResource("3_fwfk1")
+
+[node name="T265FrontToggle" type="CheckButton" parent="T265Front" unique_id=1894910031]
+offset_left = 930.0
+offset_top = 241.0
+offset_right = 1100.0
+offset_bottom = 336.0
+text = "T265 Front Cam
+"
+
+[node name="Dig" type="CameraStream" parent="." unique_id=1890206127]
+script = ExtResource("9_hixx3")
+
+[node name="DigImg" type="TextureRect" parent="Dig" unique_id=1919960550]
+anchors_preset = -1
+anchor_right = 0.017
+anchor_bottom = 0.029000001
+offset_left = 257.0
+offset_top = 197.0
+offset_right = 597.0
+offset_bottom = 397.0
+texture = ExtResource("3_fwfk1")
+
+[node name="DigToggle" type="CheckButton" parent="Dig" unique_id=1400984114]
+offset_left = 109.0
+offset_top = 262.0
+offset_right = 247.0
+offset_bottom = 346.0
+text = "Dig Camera"
+
+[node name="ConnectAllButt" type="CheckButton" parent="." unique_id=686121251]
+offset_left = 214.0
+offset_top = 645.0
+offset_right = 418.0
+offset_bottom = 695.0
+text = "Connect All Streams
+"
+
+[connection signal="toggled" from="FrontCam/FrontCamShutoff" to="FrontCam" method="_on_front_cam_shutoff_toggled"]
+[connection signal="toggled" from="ObstacleMapCam/ObstacleMapShutoff" to="ObstacleMapCam" method="_on_obstacle_map_shutoff_toggled"]
+[connection signal="toggled" from="T265LeftMapCam/T265LeftMapShutoff" to="T265LeftMapCam" method="_on_t_265_left_map_shutoff_toggled"]
+[connection signal="toggled" from="T265RightMapCam/T265RightMapCamToggle" to="T265RightMapCam" method="_on_t_265_right_map_cam_toggle_toggled"]
+[connection signal="toggled" from="RealsenseFront/RealsenseFrontToggle" to="RealsenseFront" method="_on_realsense_front_toggle_toggled"]
+[connection signal="toggled" from="T265Front/T265FrontToggle" to="T265Front" method="_on_t_265_front_toggle_toggled"]
+[connection signal="toggled" from="ConnectAllButt" to="." method="_on_connect_all_butt_toggled"]
