@@ -1,0 +1,17 @@
+[package]
+name = "embedded-teensy"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+teensy4-bsp = { version = "0.6", features = ["rt"] }
+teensy4-panic = "0.3"
+
+[profile.release]
+debug = true
+
+[profile.dev]
+opt-level = "s"
