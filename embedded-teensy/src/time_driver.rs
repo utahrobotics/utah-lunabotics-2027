@@ -1,7 +1,7 @@
 //! Implementation of embassy_time_driver for the iMXRT1062 (used in the Teensy 4.0 and 4.1)
 //! Note that currently, the implementation only uses 32 bits for the timer and pads the result to 64 bits when needed.
 //! With the 32kHz clock, it will take 37 hours for the 32-bits to overflow. This should be fine for our use.
-//! 
+//!
 //! Besides (optionally) calling the init function, user code will likely not need to directly interact with this:
 //! Embassy uses this in the background to implement asynchronous delays.
 
@@ -109,6 +109,8 @@ unsafe fn setup_gpt() -> Mutex<CriticalSectionRawMutex, Gpt> {
     gpt.set_wait_mode_enable(true);
 
     gpt.enable();
+
+    unsafe {cortex_m::peripheral::NVIC::unmask(interrupt::GPT1)};
 
     Mutex::const_new(CriticalSectionRawMutex::new(), gpt)
 }
