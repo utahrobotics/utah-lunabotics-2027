@@ -3,3 +3,6 @@ target = "thumbv7em-none-eabihf"
 
 [target.thumbv7em-none-eabihf]
 runner = ["sh", "-c", "rust-objcopy -O ihex \"$0\" \"$0.hex\" && teensy_loader_cli --mcu=TEENSY41 -w -v \"$0.hex\""]
+
+defmt = "1.0"
+imxrt-log = { version = "0.2", default-features = false, features = ["defmt", "lpuart"] }

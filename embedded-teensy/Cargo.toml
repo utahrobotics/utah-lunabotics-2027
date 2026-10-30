@@ -17,6 +17,8 @@ embassy-sync = "0.7.2"
 embassy-time = { version = "0.5.0", features = ["tick-hz-32_000"]}
 embassy-time-driver = "0.2.1"
 embassy-time-queue-utils = "0.3.0"
+defmt = "1.0"
+imxrt-log = { version = "0.2", default-features = false, features = ["defmt", "lpuart"] }
 
 [profile.release]
 debug = true
