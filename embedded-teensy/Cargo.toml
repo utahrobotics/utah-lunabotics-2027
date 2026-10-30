@@ -1,0 +1,32 @@
+[package]
+name = "embedded-teensy"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+teensy4-bsp = { version = "0.6", features = ["rt"] }
+teensy4-panic = "0.3"
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
+critical-section = "1.2"
+embassy-executor = { version = "0.9.1", features = ["arch-cortex-m", "executor-thread"]}
+embassy-sync = "0.7.2"
+embassy-time = { version = "0.5.0", features = ["tick-hz-32_000"]}
+embassy-time-driver = "0.2.1"
+embassy-time-queue-utils = "0.3.0"
+defmt = "1.0"
+imxrt-log = { version = "0.2", default-features = false, features = ["defmt", "lpuart"] }
+
+[profile.release]
+debug = true
+
+[profile.dev]
+opt-level = "s"
+
+[[bin]]
+name = "embedded-teensy"
+test = false
+bench = false
