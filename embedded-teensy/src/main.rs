@@ -22,7 +22,7 @@ async fn main(spawner: Spawner) {
     time_driver::init();
 
     // Debug log: defmt frames out of LPUART6 TX (pin 1) at 1 Mbaud.
-    let log_uart = board::lpuart(lpuart6, pins.p1, pins.p0, 1_000_000);
+    let log_uart = board::lpuart(lpuart6, pins.p1, pins.p0, 500_000);
     let Ok(poller) = imxrt_log::defmt::lpuart(
         log_uart,
         dma[7].take().unwrap(),

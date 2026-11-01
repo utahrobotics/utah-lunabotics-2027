@@ -36,9 +36,8 @@ impl Driver for TimeDriver {
 
     fn schedule_wake(&self, at: u64, waker: &core::task::Waker) {
         critical_section::with(|cs| {
-            let mut queue = self.queue.borrow(cs).borrow_mut();
-
-            if queue.schedule_wake(at, waker) {
+            let needs_alarm = self.queue.borrow(cs).borrow_mut().schedule_wake(at, waker);
+            if needs_alarm {
                 self.update_alarm(cs);
             }
         })
