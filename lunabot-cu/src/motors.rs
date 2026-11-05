@@ -167,6 +167,8 @@ pub fn enumerate_motors(
         .filter_map(|device| {
             let vendor = device.property_value("ID_VENDOR")?.to_str()?;
             let serial = device.property_value("ID_SERIAL")?.to_str()?;
+
+
             
             if vendor == "STMicroelectronics" && 
                serial == "STMicroelectronics_ChibiOS_RT_Virtual_COM_Port_304" {
@@ -190,6 +192,7 @@ pub fn enumerate_motors(
     let vesc_ids = Box::leak(Box::new(vesc_ids));
 
     for path in initial_devices {
+
         let _ = tx.send(path);
     }
 
@@ -252,12 +255,14 @@ struct MotorTask {
 
 impl MotorTask {
     fn motor_task(&mut self) {
+
         let path_str = match self.path.recv() {
             Ok(x) => x,
             Err(_) => loop {
                 std::thread::park();
             },
         };
+
         let mut motor_port;
         {
             let _guard = get_tokio_handle().enter();
@@ -281,6 +286,8 @@ impl MotorTask {
         }
         let mut motor_port = BufStream::new(motor_port);
 
+        
+
         let master_can_id;
         loop {
             let mut tmp_buf = [0u8; 128];
@@ -293,6 +300,7 @@ impl MotorTask {
                 while response.len() < 63 || response.last() != Some(&3) {
                     let n = motor_port.read(&mut tmp_buf).await?;
                     response.extend_from_slice(&tmp_buf[..n]);
+                    println!("{:?}", tmp_buf);
                 }
                 std::io::Result::Ok(response)
             };
@@ -323,16 +331,19 @@ impl MotorTask {
                 std::thread::sleep(std::time::Duration::from_secs(1));
                 continue;
             };
+
             master_can_id = values.vesc_id;
             break;
         }
+
+
 
         let Some(&slave_can) = self.vesc_ids.can_ids.get(&master_can_id) else {
             self.motor_ref.push_error(format!("Found unknown master Can ID {master_can_id}"));
             return;
         };
 
-        println!("[MOTORS] Opened motor master can: {master_can_id}. Slave can: {slave_can:?}");
+
 
         if let Some((can_id, _)) = slave_can {
             loop {
