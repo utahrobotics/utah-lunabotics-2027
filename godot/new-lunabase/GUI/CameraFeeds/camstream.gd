@@ -41,4 +41,4 @@ func _on_connect_all_butt_toggled(toggled_on: bool) -> void:
 		for cam in cameras:
 			if cam.is_streaming == true:
 				continue
-			cam.toggle_cam(cam.connection_address,340,240)
+			cam.toggle_cam(cam.connection_address,340,200)

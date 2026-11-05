@@ -25,6 +25,9 @@ extends Control
 @onready var location_label: Label = $VBoxContainer/TopBar/MarginContainer/TopPanel/StatusGroup/location_label
 @onready var bt_status_label: Label = $VBoxContainer/MainContent/HBoxContainer/CenterColumn/StatusPanel/MarginContainer/BTStatusLabel
 @onready var PitchAndRollGUI: Control = $VBoxContainer/MainContent/HBoxContainer/CenterColumn/UIAttitude
+@onready var camStream:= $Cams
+@onready var makeCamVisible:= $CheckButton
+
 var command_recorder: CommandRecorder
 
 var isCamOn := false
@@ -234,3 +237,10 @@ func _on_ip_input_gui_input(event: InputEvent) -> void:
 	if caret < ip_input.text.length():
 		ip_input.delete_text(caret, caret + 1)
 	accept_event()
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	if toggled_on == true:
+		camStream.visible = true
+	else:
+		camStream.visible = false
