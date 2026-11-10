@@ -16,12 +16,13 @@ async fn main(spawner: Spawner) {
         pins,
         mut dma,
         mut gpio2,
+        gpt1,
         ..
     } = board::t41(board::instances());
 
-    time_driver::init();
+    time_driver::init(gpt1);
 
-    // Debug log: defmt frames out of LPUART6 TX (pin 1) at 1 Mbaud.
+    // Debug log: defmt frames out of LPUART6 TX (pin 1) at 500 kbaud.
     let log_uart = board::lpuart(lpuart6, pins.p1, pins.p0, 500_000);
     let Ok(poller) = imxrt_log::defmt::lpuart(
         log_uart,

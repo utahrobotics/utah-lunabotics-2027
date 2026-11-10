@@ -2,19 +2,17 @@
 //! Note that currently, the implementation only uses 32 bits for the timer and pads the result to 64 bits when needed.
 //! With the 32kHz clock, it will take 37 hours for the 32-bits to overflow. This should be fine for our use.
 //!
-//! Besides (optionally) calling the init function, user code will likely not need to directly interact with this:
+//! Besides calling the init function once at startup, user code will likely not need to directly interact with
 //! Embassy uses this in the background to implement asynchronous delays.
 
-use embassy_time_driver::Driver;
-use embassy_time_queue_utils::Queue;
 use embassy_sync::blocking_mutex::Mutex;
 use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
-use embassy_sync::lazy_lock::LazyLock;
+use embassy_time_driver::Driver;
+use embassy_time_queue_utils::Queue;
 
-use critical_section::CriticalSection;
 use core::cell::RefCell;
+use critical_section::CriticalSection;
 use teensy4_bsp::hal::gpt::{ClockSource, Gpt, Mode, OutputCompareRegister};
-use teensy4_bsp::ral::gpt;
 
 use cortex_m_rt::interrupt;
 use teensy4_bsp::interrupt;
@@ -22,15 +20,19 @@ use teensy4_bsp::interrupt;
 const OCR: OutputCompareRegister = OutputCompareRegister::OCR1;
 
 struct TimeDriver {
-    timer: LazyLock<Mutex<CriticalSectionRawMutex, Gpt>>,
-    queue: Mutex<CriticalSectionRawMutex, RefCell<Queue>>
+    // Empty until init() hands over thee BSP's gpt1
+    timer: Mutex<CriticalSectionRawMutex, RefCell<Option<Gpt>>>,
+    queue: Mutex<CriticalSectionRawMutex, RefCell<Queue>>,
 }
-
 
 impl Driver for TimeDriver {
     fn now(&self) -> u64 {
         critical_section::with(|cs| {
-            self.timer.get().borrow(cs).count().into()
+            self.timer
+                .borrow(cs)
+                .borrow()
+                .as_ref()
+                .map_or(0, |gpt| gpt.count().into())
         })
     }
 
@@ -44,16 +46,15 @@ impl Driver for TimeDriver {
     }
 }
 
-
 // Helper methods
 impl TimeDriver {
-
     /// Called when a timer interrupt occurs
     fn on_alarm(&self) {
         critical_section::with(|cs| {
-
             // Clear interrupt
-            self.timer.get().borrow(cs).clear_elapsed(OCR);
+            if let Some(gpt) = self.timer.borrow(cs).borrow().as_ref() {
+                gpt.clear_elapsed(OCR);
+            }
 
             self.update_alarm(cs);
         });
@@ -61,19 +62,30 @@ impl TimeDriver {
 
     /// Updates the waker queue and sets the next alarm
     fn update_alarm(&self, cs: CriticalSection) {
-        let mut next_alarm = self.queue.borrow(cs).borrow_mut().next_expiration(self.now());
+        let mut next_alarm = self
+            .queue
+            .borrow(cs)
+            .borrow_mut()
+            .next_expiration(self.now());
 
         // During the process of setting the next alarm, the next alarm may have passed.
         while !self.set_alarm(cs, next_alarm) {
-            next_alarm = self.queue.borrow(cs).borrow_mut().next_expiration(self.now())
+            next_alarm = self
+                .queue
+                .borrow(cs)
+                .borrow_mut()
+                .next_expiration(self.now())
         }
     }
 
     /// Updates the timer to interrupt at given time.
     fn set_alarm(&self, cs: CriticalSection, time: u64) -> bool {
-
         // Set the timer
-        let gpt = self.timer.get().borrow(cs);
+        let timer = self.timer.borrow(cs).borrow();
+        let Some(gpt) = timer.as_ref() else {
+            // No timer until init() runs, and init() sets the first alarm itself
+            return true;
+        };
 
         gpt.set_output_compare_count(OCR, time as u32);
 
@@ -90,15 +102,13 @@ impl TimeDriver {
 // Register this time driver for embassy_time
 embassy_time_driver::time_driver_impl!(
     static DRIVER: TimeDriver = TimeDriver {
-        timer: LazyLock::new(|| unsafe {setup_gpt()}),
+        timer: Mutex::new(RefCell::new(None)),
         queue: Mutex::new(RefCell::new(Queue::new()))
     }
 );
 
-/// Safety: Must be called no more than once
-unsafe fn setup_gpt() -> Mutex<CriticalSectionRawMutex, Gpt> {
-    let mut gpt = Gpt::new(unsafe {gpt::GPT1::instance()});
-
+/// Starts the time drive; call once at startup with gpt1 from board::resources
+pub fn init(mut gpt: Gpt) {
     gpt.set_clock_source(ClockSource::LowFrequencyReferenceClock);
     gpt.set_divider(1);
     gpt.set_mode(Mode::FreeRunning);
@@ -109,14 +119,14 @@ unsafe fn setup_gpt() -> Mutex<CriticalSectionRawMutex, Gpt> {
 
     gpt.enable();
 
-    unsafe {cortex_m::peripheral::NVIC::unmask(interrupt::GPT1)};
+    critical_section::with(|cs| {
+        DRIVER.timer.borrow(cs).replace(Some(gpt));
 
-    Mutex::const_new(CriticalSectionRawMutex::new(), gpt)
-}
+        // Sets an alarm for any timers scheduled before init() ran
+        DRIVER.update_alarm(cs);
+    });
 
-pub fn init() {
-    // Force the initialization of the timer by accessing the lazylock
-    DRIVER.timer.get();
+    unsafe { cortex_m::peripheral::NVIC::unmask(interrupt::GPT1) };
 }
 
 // Register the interrupt handler
