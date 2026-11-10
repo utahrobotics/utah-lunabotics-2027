@@ -19,6 +19,9 @@ embassy-time-driver = "0.2.1"
 embassy-time-queue-utils = "0.3.0"
 defmt = "1.0"
 imxrt-log = { version = "0.2", default-features = false, features = ["defmt", "lpuart"] }
+usb-device = "0.3"
+usbd-serial = "0.2"
+static_cell = "2"
 
 [profile.release]
 debug = true
