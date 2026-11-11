@@ -15,4 +15,4 @@ func _on_realsense_front_toggle_toggled(toggled_on: bool) -> void:
 
 func _on_realsense_front_text_field_text_changed(new_text: String) -> void:
 	port = new_text
-	connection_address = get_parent().connection_prefix + port
+	connection_address = get_parent().connection_prefix + ":" + port

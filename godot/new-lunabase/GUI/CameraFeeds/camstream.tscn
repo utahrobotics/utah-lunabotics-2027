@@ -259,17 +259,17 @@ text = "Connect All Streams
 "
 
 [node name="AddressPrefix" type="LineEdit" parent="." unique_id=1731403130]
-offset_left = 355.0
-offset_top = 442.0
-offset_right = 500.0
-offset_bottom = 473.0
+offset_left = 995.0
+offset_top = 514.0
+offset_right = 1140.0
+offset_bottom = 545.0
 text = "192.168.0.100"
 
 [node name="AddressLabel" type="Label" parent="." unique_id=1696384793]
-offset_left = 348.0
-offset_top = 474.0
-offset_right = 487.0
-offset_bottom = 497.0
+offset_left = 998.0
+offset_top = 484.0
+offset_right = 1137.0
+offset_bottom = 507.0
 text = "Router Address"
 
 [connection signal="toggled" from="FrontCam/FrontCamShutoff" to="FrontCam" method="_on_front_cam_shutoff_toggled"]

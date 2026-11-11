@@ -18,5 +18,5 @@ func _on_front_cam_shutoff_toggled(toggled_on: bool) -> void:
 
 func _on_line_edit_text_changed(new_text: String) -> void:
 	port = new_text
-	connection_address = get_parent().connection_prefix + port
+	connection_address = get_parent().connection_prefix +":" + port
 	

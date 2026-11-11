@@ -8,6 +8,9 @@ extends Node2D
 @onready var T265LeftMapCam = $T265LeftMapCam
 @onready var T265LeftMapCamImg = $T265LeftMapCam/T265LeftMapCam
 
+@onready var T265RightMapCam = $T265RightMapCam
+@onready var T265RightmapCamImg = $T265RightMapCam/T265RightMapCam
+
 @onready var RealsenseFront = $RealsenseFront
 @onready var RealsenseFrontImg = $RealsenseFront/RealsenseFront
 
@@ -17,13 +20,14 @@ extends Node2D
 @onready var Dig = $Dig
 @onready var DigImg = $Dig/DigImg
 
-var connection_prefix: String = "192.168.0.100:"
+var connection_prefix: String = "192.168.0.100"
 var cameras
 func _ready()-> void:
 	cameras = {
 	FrontCam: FrontCamImg,
 	ObstacleMapcam: ObstacleMapCamImg, 
 	T265LeftMapCam: T265LeftMapCamImg,
+	T265RightMapCam: T265RightmapCamImg,
 	RealsenseFront: RealsenseFrontImg,
 	T265Front: T265FrontImg,
 	Dig: DigImg
@@ -43,7 +47,12 @@ func _on_connect_all_butt_toggled(toggled_on: bool) -> void:
 			if cam.is_streaming == true:
 				continue
 			cam.toggle_cam(cam.connection_address,340,200)
-
+			cam.is_streaming = true
+	else:
+		for cam in cameras:
+			cam.toggle_cam(cam.connection_address,340,200)
+			cam.is_streaming = false
+		
 
 func _on_address_prefix_text_changed(new_text: String) -> void:
 	connection_prefix = new_text

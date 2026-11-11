@@ -17,4 +17,4 @@ func _on_t_265_left_map_shutoff_toggled(toggled_on: bool) -> void:
 
 func _on_t_265_left_map_text_field_text_changed(new_text: String) -> void:
 	port = new_text
-	connection_address = get_parent().connection_prefix + port
+	connection_address = get_parent().connection_prefix +":"+ port
