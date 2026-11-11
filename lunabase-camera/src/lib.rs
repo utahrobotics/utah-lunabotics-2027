@@ -68,7 +68,6 @@ impl CameraStream {
             let mut input_ctx = match ffmpeg::format::input_with_dictionary(&url, opts.clone()) {
                 Ok(ctx) => ctx,
                 Err(_) => {
-                    godot_error!("Failed to connect to camera:");
                     return;
                 }
             };
