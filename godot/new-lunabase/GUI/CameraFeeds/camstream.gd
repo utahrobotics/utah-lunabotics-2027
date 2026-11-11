@@ -16,6 +16,8 @@ extends Node2D
 
 @onready var Dig = $Dig
 @onready var DigImg = $Dig/DigImg
+
+var connection_prefix: String = "192.168.0.100:"
 var cameras
 func _ready()-> void:
 	cameras = {
@@ -37,7 +39,6 @@ func _process(delta: float) -> void:
 func _on_connect_all_butt_toggled(toggled_on: bool) -> void:
 	if toggled_on == true:
 		print("BUTTON PRESSED")
-		#cam_stream.connect_camera("192.168.0.100:4002")
 		for cam in cameras:
 			if cam.is_streaming == true:
 				continue
