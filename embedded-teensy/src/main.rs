@@ -4,7 +4,7 @@
 mod time_driver;
 mod usb;
 
-use defmt::info;
+use defmt::{debug, info, warn};
 use embassy_executor::Spawner;
 use embassy_time::Timer;
 use teensy4_bsp::board;
@@ -57,4 +57,29 @@ async fn log_flush(mut poller: imxrt_log::Poller) {
         poller.poll();
         Timer::after_millis(2).await;
     }
+}
+
+/// For testing: sends back whatever the host sends; Pico's
+/// USB tasks will replace this once they're ported
+#[embassy_executor::task]
+async fn usb_echo(mut tx: usb::CdcSender, mut rx: usb::CdcReceiver) {
+    todo!("finish implementing this task"); /*
+    let mut buf = [0u8, 64];
+    loop {
+    tx.wait_connection().await;
+    rx.wait_connection().await;
+    info!("USB connected");
+    loop {
+    let n = match rx.read_packet(&mut buf).await {
+    Ok(n) => n,
+    Err(usb::Disconnected) => break,
+    };
+    debug!("echoing {} bytes (DTR {}", n, tx.dtr());
+    if tx.write_packet(&buf[..n]).await.is_err() {
+    break;
+    }
+    }
+    warn!("USB Disconnected");
+    }
+     */
 }

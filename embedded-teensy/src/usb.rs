@@ -4,7 +4,9 @@ use core::sync::atomic::{AtomicBool, Ordering};
 use core::task::Poll;
 
 use critical_section::Mutex;
+use defmt::info;
 use embassy_sync::waitqueue::AtomicWaker;
+use embassy_time::Timer;
 use static_cell::StaticCell;
 use teensy4_bsp::interrupt;
 use teensy4_bsp::usbd::{BusAdapter, EndpointMemory, EndpointState, Instances, Speed};
@@ -51,7 +53,7 @@ static EP_STATE: EndpointState = EndpointState::max_endpoints();
 
 // Initialize USB device and start its interrupt; provides a USB Communications
 // Device Class(CDC) Sender and receiver
-pub fn init(usb: Instances<1>, id: Identity) -> (CDCSender, CDCReceiver) {
+pub fn init(usb: Instances<1>, id: Identity) -> (CdcSender, CdcReceiver) {
     static BUS: StaticCell<UsbBusAllocator<BusAdapter>> = StaticCell::new();
 
     // full-speed capped at 64-bytes for now. we could faster if we'd like to but
@@ -59,16 +61,141 @@ pub fn init(usb: Instances<1>, id: Identity) -> (CDCSender, CDCReceiver) {
     // same behavior for the time being
     let adapter = BusAdapter::with_speed(usb, &EP_MEMORY, &EP_STATE, Speed::LowFull);
     adapter.set_interrupts(true);
+    let bus = BUS.init(UsbBusAllocator::new(adapter));
 
+    let serial = SerialPort::new(bus);
+
+    let serial = SerialPort::new(bus);
+    let device = UsbDeviceBuilder::new(bus, UsbVidPid(id.vid, id.pid))
+        .strings(&[StringDescriptors::new(LangID::EN_US)
+            .manufacturer(id.manufacturer)
+            .product(id.product)
+            .serial_number(id.serial_number)])
+        .expect("USB string descriptors")
+        .device_class(usbd_serial::USB_CLASS_CDC)
+        .max_packet_size_0(64)
+        .expect("USB contol packet size")
+        .max_power(100)
+        .expect("USB max power")
+        .build();
+
+    critical_section::with(|cs| {
+        STACK.borrow(cs).replace(Some(Stack {
+            device,
+            serial,
+            configured: false,
+        }))
+    });
     // Safety: handler only touches state behind critical sections.
     unsafe { cortex_m::peripheral::NVIC::unmask(interrupt::USB_OTG1) };
-    (CDCSender { _private: () }, CDCReceiver { _private: () })
+    (CdcSender { _private: () }, CdcReceiver { _private: () })
 }
 
-pub struct CDCSender {
+#[cortex_m_rt::interrupt]
+fn USB_OTG1() {
+    critical_section::with(|cs| {
+        let mut stack = STACK.borrow(cs).borrow_mut();
+        let Some(stack) = stack.as_mut() else {
+            return;
+        };
+
+        stack.device.poll(&mut [&mut stack.serial]);
+
+        let configured = stack.device.state() == UsbDeviceState::Configured;
+        if configured != stack.configured {
+            if configured {
+                // needed once after all imxrt-usbd reconfiguration
+                stack.device.bus().configure();
+                info!("USB configured");
+            } else {
+                info! {"USB no longer configured"};
+            }
+            stack.configured = configured;
+        }
+
+        // host setting 134 baud means "reboot into the bootloader", so reflashing
+        // doesn't need the Program button on the Teensy board
+        if stack.serial.line_coding().data_rate() == 134 {
+            REBOOT_REQUESTED.store(true, Ordering::Relaxed);
+        }
+    });
+    RX_WAKER.wake();
+    TX_WAKER.wake();
+}
+
+pub struct CdcSender {
     _private: (),
 }
 
-pub struct CDCReceiver {
+fn with_stack<R>(f: impl FnOnce(&mut Stack) -> R) -> Option<R> {
+    critical_section::with(|cs| STACK.borrow(cs).borrow_mut().as_mut().map(f))
+}
+
+fn is_configured() -> bool {
+    with_stack(|s| s.configured).unwrap_or(false)
+}
+
+/// The attempt a read came to
+enum Attempt<T> {
+    Done(T),
+    /// Backoff instead of retrying in a tight loop as this would stave other tasks
+    Backoff,
+}
+
+impl CdcSender {
+    /// For waiting til the host has configured the device.
+    pub async fn wait_connection(&mut self) {
+        poll_fn(|cx| {
+            TX_WAKER.register(cx.waker());
+            if is_configured() {
+                Poll::Ready(())
+            } else {
+                Poll::Pending
+            }
+        })
+        .await
+    }
+}
+
+pub struct CdcReceiver {
     _private: (),
+}
+
+impl CdcReceiver {
+    /// For waiting til the host has configurd the device
+    pub async fn wait_connection(&mut self) {
+        poll_fn(|cx| {
+            RX_WAKER.register(cx.waker());
+            if is_configured() {
+                Poll::Ready(())
+            } else {
+                Poll::Pending
+            }
+        })
+        .await
+    }
+
+    pub async fn read_packet(&mut self, buf: &mut [u8]) -> Result<usize, Disconnected> {
+        loop {
+            let attempt = poll_fn(|cx| {
+                RX_WAKER.register(cx.waker());
+                with_stack(|s| {
+                    if !s.configured {
+                        return Poll::Ready(Err(Disconnected));
+                    }
+                    match s.serial.read(buf) {
+                        Ok(n) if n > 0 => Poll::Ready(Ok(Attempt::Done(n))),
+                        Ok(_) | Err(UsbError::WouldBlock) => Poll::Pending,
+                        Err(_) => Poll::Ready(Ok(Attempt::Backoff)),
+                    }
+                })
+                .unwrap_or(Poll::Ready(Err(Disconnected)))
+            })
+            .await?;
+            match attempt {
+                Attempt::Done(n) => return Ok(n),
+                Attempt::Backoff => Timer::after_millis(1).await,
+            }
+        }
+    }
 }
