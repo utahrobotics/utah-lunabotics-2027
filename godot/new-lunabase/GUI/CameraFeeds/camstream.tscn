@@ -258,6 +258,20 @@ offset_bottom = 693.0
 text = "Connect All Streams
 "
 
+[node name="AddressPrefix" type="LineEdit" parent="." unique_id=1731403130]
+offset_left = 355.0
+offset_top = 442.0
+offset_right = 500.0
+offset_bottom = 473.0
+text = "192.168.0.100"
+
+[node name="AddressLabel" type="Label" parent="." unique_id=1696384793]
+offset_left = 348.0
+offset_top = 474.0
+offset_right = 487.0
+offset_bottom = 497.0
+text = "Router Address"
+
 [connection signal="toggled" from="FrontCam/FrontCamShutoff" to="FrontCam" method="_on_front_cam_shutoff_toggled"]
 [connection signal="text_changed" from="FrontCam/FrontCamTextField" to="FrontCam" method="_on_line_edit_text_changed"]
 [connection signal="toggled" from="ObstacleMapCam/ObstacleMapShutoff" to="ObstacleMapCam" method="_on_obstacle_map_shutoff_toggled"]
@@ -273,3 +287,4 @@ text = "Connect All Streams
 [connection signal="toggled" from="Dig/DigToggle" to="Dig" method="_on_dig_toggle_toggled"]
 [connection signal="text_changed" from="Dig/DigText" to="Dig" method="_on_dig_text_text_changed"]
 [connection signal="toggled" from="ConnectAllButt" to="." method="_on_connect_all_butt_toggled"]
+[connection signal="text_changed" from="AddressPrefix" to="." method="_on_address_prefix_text_changed"]

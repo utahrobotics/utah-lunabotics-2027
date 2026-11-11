@@ -43,3 +43,11 @@ func _on_connect_all_butt_toggled(toggled_on: bool) -> void:
 			if cam.is_streaming == true:
 				continue
 			cam.toggle_cam(cam.connection_address,340,200)
+
+
+func _on_address_prefix_text_changed(new_text: String) -> void:
+	connection_prefix = new_text
+	
+	for cam in cameras:
+		cam.connection_address = connection_prefix + cam.port
+		cam.prefix.text = connection_prefix
