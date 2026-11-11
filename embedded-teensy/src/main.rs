@@ -2,6 +2,7 @@
 #![no_main]
 
 mod time_driver;
+mod usb;
 
 use defmt::info;
 use embassy_executor::Spawner;
