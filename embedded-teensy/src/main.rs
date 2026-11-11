@@ -34,6 +34,21 @@ async fn main(spawner: Spawner) {
     };
     spawner.spawn(log_flush(poller)).unwrap();
     info!("embedded-teensy started");
+    // lunabot-cu finds the board by its serial number, "USR-PICO-PRIME" is
+    // embedded_common::PRIME_PICO_SERIAL; switch to constant once embedded_common
+    // is a dependency.
+    let (usb_tx, usb_rx) = usb::init(
+        usb,
+        usb::Identity {
+            vid: 0xc0de,
+            pid: 0xcafe,
+            manufacturer: "USR",
+            product: "USR-PICO-PRIME",
+            serial_number: "USR-PICO-PRIME",
+        },
+    );
+    spawner.spawn(usb_echo(usb_tx, usb_rx)).unwrap();
+    spawner.spawn(bootloader_watch()).unwrap();
 
     let led = board::led(&mut gpio2, pins.p13);
     spawner.spawn(blink(led)).unwrap();
@@ -63,23 +78,22 @@ async fn log_flush(mut poller: imxrt_log::Poller) {
 /// USB tasks will replace this once they're ported
 #[embassy_executor::task]
 async fn usb_echo(mut tx: usb::CdcSender, mut rx: usb::CdcReceiver) {
-    todo!("finish implementing this task"); /*
+    todo!("finish implementing this task");
     let mut buf = [0u8, 64];
     loop {
-    tx.wait_connection().await;
-    rx.wait_connection().await;
-    info!("USB connected");
-    loop {
-    let n = match rx.read_packet(&mut buf).await {
-    Ok(n) => n,
-    Err(usb::Disconnected) => break,
-    };
-    debug!("echoing {} bytes (DTR {}", n, tx.dtr());
-    if tx.write_packet(&buf[..n]).await.is_err() {
-    break;
+        tx.wait_connection().await;
+        rx.wait_connection().await;
+        info!("USB connected");
+        loop {
+            let n = match rx.read_packet(&mut buf).await {
+                Ok(n) => n,
+                Err(usb::Disconnected) => break,
+            };
+            debug!("echoing {} bytes (DTR {}", n, tx.dtr());
+            if tx.write_packet(&buf[..n]).await.is_err() {
+                break;
+            }
+        }
+        warn!("USB Disconnected");
     }
-    }
-    warn!("USB Disconnected");
-    }
-     */
 }

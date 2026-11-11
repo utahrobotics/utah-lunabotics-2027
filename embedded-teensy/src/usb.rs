@@ -123,10 +123,6 @@ fn USB_OTG1() {
     TX_WAKER.wake();
 }
 
-pub struct CdcSender {
-    _private: (),
-}
-
 fn with_stack<R>(f: impl FnOnce(&mut Stack) -> R) -> Option<R> {
     critical_section::with(|cs| STACK.borrow(cs).borrow_mut().as_mut().map(f))
 }
@@ -142,6 +138,10 @@ enum Attempt<T> {
     Backoff,
 }
 
+pub struct CdcSender {
+    _private: (),
+}
+
 impl CdcSender {
     /// For waiting til the host has configured the device.
     pub async fn wait_connection(&mut self) {
@@ -152,6 +152,28 @@ impl CdcSender {
             } else {
                 Poll::Pending
             }
+        })
+        .await
+    }
+
+    pub async fn write_packet(&mut self, data: &[u8]) -> Result<(), Disconnected> {
+        let mut written = 0;
+        poll_fn(|cx| {
+            TX_WAKER.register(cx.waker());
+            with_stack(|s| {
+                if !s.configured {
+                    return Poll::Ready(Err(Disconnected));
+                }
+                while written < data.len() {
+                    match s.serial.write(&data[written..]) {
+                        Ok(n) => written += n,
+                        Err(UsbError::WouldBlock) => return Poll::Pending,
+                        Err(_) => return Poll::Ready(Err(Disconnected)),
+                    }
+                }
+                Poll::Ready(Ok(()))
+            })
+            .unwrap_or(Poll::Ready(Err(Disconnected)))
         })
         .await
     }
