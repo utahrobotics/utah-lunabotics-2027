@@ -22,6 +22,9 @@ imxrt-log = { version = "0.2", default-features = false, features = ["defmt", "l
 usb-device = "0.3"
 usbd-serial = "0.2"
 static_cell = "2"
+embassy-futures = "0.1"
+cobs = { version = "0.5", default-features = false }
+embedded_common = { path = "../embedded_common", features = ["defmt"] }
 
 [profile.release]
 debug = true

@@ -48,6 +48,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4e7648175b45a9a48536d676f68d918270699102aa8dab5496df06904c914600"
 
 [[package]]
+name = "cobs"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd93fd2c1b27acd030440c9dbd9d14c1122aad622374fe05a670b67a4bc034be"
+dependencies = [
+ "heapless 0.9.3",
+ "thiserror",
+]
+
+[[package]]
 name = "cortex-m"
 version = "0.7.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -206,6 +216,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2fc328bf943af66b80b98755db9106bf7e7471b0cf47dc8559cd9a6be504cc9c"
 
 [[package]]
+name = "embassy-futures"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc2d050bdc5c21e0862a89256ed8029ae6c290a93aecefc73084b3002cdebb01"
+
+[[package]]
 name = "embassy-sync"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -305,21 +321,31 @@ dependencies = [
 name = "embedded-teensy"
 version = "0.1.0"
 dependencies = [
+ "cobs",
  "cortex-m",
  "cortex-m-rt",
  "critical-section",
  "defmt",
  "embassy-executor",
+ "embassy-futures",
  "embassy-sync",
  "embassy-time",
  "embassy-time-driver",
  "embassy-time-queue-utils",
+ "embedded_common",
  "imxrt-log",
  "static_cell",
  "teensy4-bsp",
  "teensy4-panic",
  "usb-device",
  "usbd-serial",
+]
+
+[[package]]
+name = "embedded_common"
+version = "0.1.0"
+dependencies = [
+ "defmt",
 ]
 
 [[package]]
