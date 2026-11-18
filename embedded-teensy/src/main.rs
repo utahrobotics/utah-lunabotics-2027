@@ -18,6 +18,7 @@ async fn main(spawner: Spawner) {
         mut dma,
         mut gpio2,
         gpt1,
+        usb,
         ..
     } = board::t41(board::instances());
 
@@ -78,8 +79,7 @@ async fn log_flush(mut poller: imxrt_log::Poller) {
 /// USB tasks will replace this once they're ported
 #[embassy_executor::task]
 async fn usb_echo(mut tx: usb::CdcSender, mut rx: usb::CdcReceiver) {
-    todo!("finish implementing this task");
-    let mut buf = [0u8, 64];
+    let mut buf = [0u8; 64];
     loop {
         tx.wait_connection().await;
         rx.wait_connection().await;
@@ -89,11 +89,17 @@ async fn usb_echo(mut tx: usb::CdcSender, mut rx: usb::CdcReceiver) {
                 Ok(n) => n,
                 Err(usb::Disconnected) => break,
             };
-            debug!("echoing {} bytes (DTR {}", n, tx.dtr());
+            debug!("echoing {} bytes (DTR {})", n, tx.dtr());
             if tx.write_packet(&buf[..n]).await.is_err() {
                 break;
             }
         }
-        warn!("USB Disconnected");
+        warn!("USB disconnected");
     }
+}
+
+/// Reboots into the bootloader when the host sets the port to 134 baud.
+#[embassy_executor::task]
+async fn bootloader_watch() {
+    usb::reboot_to_bootloader_on_request().await
 }

@@ -123,6 +123,22 @@ fn USB_OTG1() {
     TX_WAKER.wake();
 }
 
+/// When this is running in a task and the host sets the port to 134 baud
+/// it hands control to PJRC's bootloader.
+pub async fn reboot_to_bootloader_on_request() -> ! {
+    while !REBOOT_REQUESTED.load(Ordering::Relaxed) {
+        Timer::after_millis(50).await;
+    }
+    info!("Rebooting into the bootloader");
+
+    Timer::after_millis(100).await;
+
+    unsafe { core::arch::asm!("bkpt #251") };
+    loop {
+        cortex_m::asm::wfi();
+    }
+}
+
 fn with_stack<R>(f: impl FnOnce(&mut Stack) -> R) -> Option<R> {
     critical_section::with(|cs| STACK.borrow(cs).borrow_mut().as_mut().map(f))
 }
@@ -154,6 +170,11 @@ impl CdcSender {
             }
         })
         .await
+    }
+
+    /// Whether the host has the port open: Data Terminal Ready(DTR)
+    pub fn dtr(&self) -> bool {
+        with_stack(|s| s.configured && s.serial.dtr()).unwrap_or(false)
     }
 
     pub async fn write_packet(&mut self, data: &[u8]) -> Result<(), Disconnected> {
