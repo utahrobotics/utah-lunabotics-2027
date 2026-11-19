@@ -557,7 +557,6 @@ robotics framework. Copper organizes the system as a **directed acyclic graph
 | `common/`                       | Types shared between lunabase and lunabot                                                    |
 | `embedded_common/`              | `no_std` types shared with embedded firmware                                                 |
 | `embedded/`                     | Firmware for the 2026 robot's Picos                                                          |
-| `embedded-legacy/`              | Firmware for the previous robot (TERI)                                                       |
 | `external-tasks/realsense/`     | External process for RealSense depth cameras                                                 |
 | `lunabase-lib/`                 | Rust GDExtension library for the Godot lunabase                                              |
 | `godot/`                        | Godot project for the base station UI                                                        |

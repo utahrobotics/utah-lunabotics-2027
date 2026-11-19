@@ -157,9 +157,6 @@ Helper functions for:
 ## embedded_common
 A no_std crate containing structures used by the embedded code as well as our tasks. 
 
-## embedded-legacy 
-- embedded code for last years robot TERI, kept for backwards compatibility
-
 ## Embedded
 - embedded code for this years robot (2026)
 
