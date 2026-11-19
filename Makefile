@@ -77,6 +77,7 @@ visualize-config:
 
 build-lunabase:
 	cd lunabase-lib && cargo build --release && cargo build 
+	cd lunabase-camera && cargo build --release && cargo build
 
 edit-lunabase: build-lunabase
 	cd godot/new-lunabase && godot project.godot

@@ -329,3 +329,4 @@ impl Default for FromLunabot {
         Self::ErroredTasks(HashMap::new())
     }
 }
+

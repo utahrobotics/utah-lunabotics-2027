@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dhg4sb4ifrvh8" path="res://GUI/PitchAndRollProposal/Testing/FlightSim/UIAttitude/UIAttitude.tscn" id="4_3r4oj"]
 [ext_resource type="PackedScene" uid="uid://buo5ncrpuluwh" path="res://GUI/ArenaMap/ArenaMap.tscn" id="6_moxsj"]
 [ext_resource type="Script" uid="uid://bgn22i7ngljkr" path="res://MainController/maps_option_button.gd" id="7_xxe4i"]
+[ext_resource type="PackedScene" uid="uid://eg1ustne464u" path="res://GUI/CameraFeeds/camstream.tscn" id="9_548jp"]
 
 [node name="MainControl" type="Control" unique_id=1904223292]
 layout_mode = 3
@@ -246,6 +247,7 @@ size_flags_vertical = 3
 
 [node name="ArenaMap" parent="VBoxContainer/MainContent/HBoxContainer/CenterColumn/Map Panel" unique_id=1557496579 instance=ExtResource("6_moxsj")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 
 [node name="UIAttitude" parent="VBoxContainer/MainContent/HBoxContainer/CenterColumn" unique_id=1693065779 instance=ExtResource("4_3r4oj")]
@@ -404,4 +406,17 @@ text = "Dump
 [node name="LunabaseHumanController" type="Node" parent="." unique_id=1500504990]
 script = ExtResource("2")
 
+[node name="Cams" parent="." unique_id=1240263653 instance=ExtResource("9_548jp")]
+visible = false
+position = Vector2(3, 4)
+
+[node name="CheckButton" type="CheckButton" parent="." unique_id=1455462795]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 661.0
+offset_right = 140.0
+offset_bottom = 692.0
+text = "CamFeed"
+
 [connection signal="value_changed" from="VBoxContainer/MainContent/HBoxContainer/RightColumn/SpeedControl/MarginContainer/VBox/SpeedMultiplierSlider" to="." method="_on_speed_multiplier_slider_value_changed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

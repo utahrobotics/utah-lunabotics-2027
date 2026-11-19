@@ -1,0 +1,290 @@
+[gd_scene format=3 uid="uid://eg1ustne464u"]
+
+[ext_resource type="Script" uid="uid://dqvktbgm2s07c" path="res://GUI/CameraFeeds/camstream.gd" id="1_ktltp"]
+[ext_resource type="Script" uid="uid://bcx4463ttch53" path="res://GUI/CameraFeeds/cam_scripts/front_cam.gd" id="2_w40kg"]
+[ext_resource type="Texture2D" uid="uid://df6hu5il5le7s" path="res://Assets/Camstream/Barbies's Dinner :).JPG" id="3_ktltp"]
+[ext_resource type="Script" uid="uid://dncq8q546pi5g" path="res://GUI/CameraFeeds/cam_scripts/obstacle_map_cam.gd" id="4_fwfk1"]
+[ext_resource type="Script" uid="uid://bu352pvryfn0k" path="res://GUI/CameraFeeds/cam_scripts/t_265_left_map_cam.gd" id="5_as2so"]
+[ext_resource type="Script" uid="uid://breickkfhk0e7" path="res://GUI/CameraFeeds/cam_scripts/t_265_right_map_cam.gd" id="6_ekb00"]
+[ext_resource type="Script" uid="uid://dfymgn5skkigp" path="res://GUI/CameraFeeds/cam_scripts/realsense_front.gd" id="7_ntluv"]
+[ext_resource type="Script" uid="uid://dp6adb5q18ga" path="res://GUI/CameraFeeds/cam_scripts/t_265_front.gd" id="8_j5vgx"]
+[ext_resource type="Script" uid="uid://bww362o4yqie6" path="res://GUI/CameraFeeds/cam_scripts/dig.gd" id="9_hixx3"]
+
+[node name="Cams" type="Node2D" unique_id=1240263653]
+script = ExtResource("1_ktltp")
+metadata/_edit_vertical_guides_ = [544.0]
+
+[node name="FrontCam" type="CameraStream" parent="." unique_id=1348147957]
+script = ExtResource("2_w40kg")
+
+[node name="FrontCamImage" type="TextureRect" parent="FrontCam" unique_id=1445969233]
+offset_left = 332.0
+offset_top = 46.0
+offset_right = 519.0
+offset_bottom = 174.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="FrontCamShutoff" type="CheckButton" parent="FrontCam" unique_id=646000079]
+offset_left = 528.0
+offset_top = 459.0
+offset_right = 653.0
+offset_bottom = 490.0
+text = "FrontCam"
+
+[node name="FrontCamTextField" type="LineEdit" parent="FrontCam" unique_id=536847505]
+offset_left = 611.0
+offset_top = 488.0
+offset_right = 679.5
+offset_bottom = 531.0
+text = "4002"
+
+[node name="FrontPrefix" type="Label" parent="FrontCam" unique_id=289692898]
+offset_left = 502.0
+offset_top = 500.0
+offset_right = 607.0
+offset_bottom = 523.0
+text = "192.168.0.100:"
+
+[node name="ObstacleMapCam" type="CameraStream" parent="." unique_id=186746629]
+script = ExtResource("4_fwfk1")
+
+[node name="ObstacleMapImage" type="TextureRect" parent="ObstacleMapCam" unique_id=637648968]
+offset_left = 522.0
+offset_top = 45.0
+offset_right = 709.0
+offset_bottom = 173.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="ObstacleMapShutoff" type="CheckButton" parent="ObstacleMapCam" unique_id=470804469]
+offset_left = 533.0
+offset_top = 523.0
+offset_right = 683.0
+offset_bottom = 554.0
+text = "ObstacleMap
+
+"
+
+[node name="ObstacleCamTextField" type="LineEdit" parent="ObstacleMapCam" unique_id=163842216]
+offset_left = 822.0
+offset_top = 524.0
+offset_right = 890.5
+offset_bottom = 555.0
+text = "5000"
+
+[node name="ObstaclePrefix" type="Label" parent="ObstacleMapCam" unique_id=173418794]
+offset_left = 699.0
+offset_top = 525.0
+offset_right = 808.0
+offset_bottom = 548.0
+text = "192.168.0.100:"
+
+[node name="T265LeftMapCam" type="CameraStream" parent="." unique_id=1193133348]
+script = ExtResource("5_as2so")
+
+[node name="T265LeftMapCam" type="TextureRect" parent="T265LeftMapCam" unique_id=1162131074]
+anchors_preset = -1
+anchor_right = 0.033
+anchor_bottom = 0.057000004
+offset_left = 338.0
+offset_top = 300.0
+offset_right = 525.0
+offset_bottom = 428.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="T265LeftMapShutoff" type="CheckButton" parent="T265LeftMapCam" unique_id=1279265622]
+offset_left = 694.0
+offset_top = 369.0
+offset_right = 904.0
+offset_bottom = 400.0
+text = "T265LeftMap Shutoff
+"
+
+[node name="T265LeftMapTextField" type="LineEdit" parent="T265LeftMapCam" unique_id=1510688108]
+offset_left = 881.0
+offset_top = 399.0
+offset_right = 949.5
+offset_bottom = 430.0
+text = "5001"
+
+[node name="T265LeftPrefix" type="Label" parent="T265LeftMapCam" unique_id=1930262742]
+offset_left = 753.0
+offset_top = 401.0
+offset_right = 863.0
+offset_bottom = 424.0
+text = "192.168.0.100:"
+
+[node name="T265RightMapCam" type="CameraStream" parent="." unique_id=1049028958]
+script = ExtResource("6_ekb00")
+
+[node name="T265RightMapCam" type="TextureRect" parent="T265RightMapCam" unique_id=1869401423]
+anchors_preset = -1
+offset_left = 710.0
+offset_top = 176.0
+offset_right = 897.0
+offset_bottom = 304.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="T265RightMapCamToggle" type="CheckButton" parent="T265RightMapCam" unique_id=1105019450]
+offset_left = 677.0
+offset_top = 314.0
+offset_right = 875.0
+offset_bottom = 345.0
+text = "T265RightMap Cam"
+
+[node name="T265RightMapTextField" type="LineEdit" parent="T265RightMapCam" unique_id=986382086]
+offset_left = 876.0
+offset_top = 340.0
+offset_right = 944.5
+offset_bottom = 371.0
+text = "5002"
+
+[node name="T265RightPrefix" type="Label" parent="T265RightMapCam" unique_id=568777364]
+offset_left = 753.0
+offset_top = 347.0
+offset_right = 871.0
+offset_bottom = 370.0
+text = "192.168.0.100:"
+
+[node name="RealsenseFront" type="CameraStream" parent="." unique_id=213766461]
+script = ExtResource("7_ntluv")
+
+[node name="RealsenseFront" type="TextureRect" parent="RealsenseFront" unique_id=421718981]
+offset_left = 522.0
+offset_top = 172.0
+offset_right = 709.0
+offset_bottom = 300.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="RealsenseFrontToggle" type="CheckButton" parent="RealsenseFront" unique_id=369314232]
+offset_left = 661.0
+offset_top = 458.0
+offset_right = 826.0
+offset_bottom = 489.0
+text = "Realsense Cam
+"
+
+[node name="RealsenseFrontTextField" type="LineEdit" parent="RealsenseFront" unique_id=1703734646]
+offset_left = 824.0
+offset_top = 484.0
+offset_right = 892.5
+offset_bottom = 515.0
+text = "4003"
+
+[node name="RealsensePrefix" type="Label" parent="RealsenseFront" unique_id=1934252650]
+offset_left = 703.0
+offset_top = 491.0
+offset_right = 820.0
+offset_bottom = 514.0
+text = "192.168.0.100:"
+
+[node name="T265Front" type="CameraStream" parent="." unique_id=1671296264]
+script = ExtResource("8_j5vgx")
+
+[node name="T265FrontImg" type="TextureRect" parent="T265Front" unique_id=1363581987]
+offset_left = 705.0
+offset_top = 49.0
+offset_right = 892.0
+offset_bottom = 177.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="T265FrontToggle" type="CheckButton" parent="T265Front" unique_id=1894910031]
+offset_left = 532.0
+offset_top = 370.0
+offset_right = 702.0
+offset_bottom = 401.0
+text = "T265 Front Cam
+"
+
+[node name="T265FrontText" type="LineEdit" parent="T265Front" unique_id=322003615]
+offset_left = 665.0
+offset_top = 395.0
+offset_right = 733.5
+offset_bottom = 426.0
+text = "5003"
+
+[node name="T265FrontPrefix" type="Label" parent="T265Front" unique_id=1590817204]
+offset_left = 550.0
+offset_top = 343.0
+offset_right = 660.0
+offset_bottom = 366.0
+text = "192.168.0.100:"
+
+[node name="Dig" type="CameraStream" parent="." unique_id=1890206127]
+script = ExtResource("9_hixx3")
+
+[node name="DigImg" type="TextureRect" parent="Dig" unique_id=1919960550]
+anchors_preset = -1
+anchor_right = 0.017
+anchor_bottom = 0.029000001
+offset_left = 336.0
+offset_top = 171.0
+offset_right = 523.0
+offset_bottom = 299.0
+texture = ExtResource("3_ktltp")
+expand_mode = 1
+
+[node name="DigToggle" type="CheckButton" parent="Dig" unique_id=1400984114]
+offset_left = 532.0
+offset_top = 313.0
+offset_right = 670.0
+offset_bottom = 344.0
+text = "Dig Camera"
+
+[node name="DigText" type="LineEdit" parent="Dig" unique_id=263268390]
+offset_left = 663.0
+offset_top = 337.0
+offset_right = 731.5
+offset_bottom = 379.0
+text = "4000"
+
+[node name="DigConnPrefix" type="Label" parent="Dig" unique_id=2024307072]
+offset_left = 549.0
+offset_top = 401.0
+offset_right = 659.0
+offset_bottom = 424.0
+text = "192.168.0.100:"
+
+[node name="ConnectAllButt" type="CheckButton" parent="." unique_id=686121251]
+offset_left = 968.0
+offset_top = 643.0
+offset_right = 1172.0
+offset_bottom = 693.0
+text = "Connect All Streams
+"
+
+[node name="AddressPrefix" type="LineEdit" parent="." unique_id=1731403130]
+offset_left = 995.0
+offset_top = 514.0
+offset_right = 1140.0
+offset_bottom = 545.0
+text = "192.168.0.100"
+
+[node name="AddressLabel" type="Label" parent="." unique_id=1696384793]
+offset_left = 998.0
+offset_top = 484.0
+offset_right = 1137.0
+offset_bottom = 507.0
+text = "Router Address"
+
+[connection signal="toggled" from="FrontCam/FrontCamShutoff" to="FrontCam" method="_on_front_cam_shutoff_toggled"]
+[connection signal="text_changed" from="FrontCam/FrontCamTextField" to="FrontCam" method="_on_line_edit_text_changed"]
+[connection signal="toggled" from="ObstacleMapCam/ObstacleMapShutoff" to="ObstacleMapCam" method="_on_obstacle_map_shutoff_toggled"]
+[connection signal="text_changed" from="ObstacleMapCam/ObstacleCamTextField" to="ObstacleMapCam" method="_on_obstacle_cam_text_field_text_changed"]
+[connection signal="toggled" from="T265LeftMapCam/T265LeftMapShutoff" to="T265LeftMapCam" method="_on_t_265_left_map_shutoff_toggled"]
+[connection signal="text_changed" from="T265LeftMapCam/T265LeftMapTextField" to="T265LeftMapCam" method="_on_t_265_left_map_text_field_text_changed"]
+[connection signal="toggled" from="T265RightMapCam/T265RightMapCamToggle" to="T265RightMapCam" method="_on_t_265_right_map_cam_toggle_toggled"]
+[connection signal="text_changed" from="T265RightMapCam/T265RightMapTextField" to="T265RightMapCam" method="_on_t_265_right_map_text_field_text_changed"]
+[connection signal="toggled" from="RealsenseFront/RealsenseFrontToggle" to="RealsenseFront" method="_on_realsense_front_toggle_toggled"]
+[connection signal="text_changed" from="RealsenseFront/RealsenseFrontTextField" to="RealsenseFront" method="_on_realsense_front_text_field_text_changed"]
+[connection signal="toggled" from="T265Front/T265FrontToggle" to="T265Front" method="_on_t_265_front_toggle_toggled"]
+[connection signal="text_changed" from="T265Front/T265FrontText" to="T265Front" method="_on_t_265_front_text_text_changed"]
+[connection signal="toggled" from="Dig/DigToggle" to="Dig" method="_on_dig_toggle_toggled"]
+[connection signal="text_changed" from="Dig/DigText" to="Dig" method="_on_dig_text_text_changed"]
+[connection signal="toggled" from="ConnectAllButt" to="." method="_on_connect_all_butt_toggled"]
+[connection signal="text_changed" from="AddressPrefix" to="." method="_on_address_prefix_text_changed"]
