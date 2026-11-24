@@ -1,9 +1,12 @@
 #![no_std]
 #![no_main]
 
+mod actuators;
+mod host;
 mod time_driver;
 mod usb;
 
+use actuators::ActuatorDriver;
 use defmt::{debug, info, warn};
 use embassy_executor::Spawner;
 use embassy_time::Timer;

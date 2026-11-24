@@ -7,12 +7,15 @@ pub struct ActuatorDriver {
 
 /// Currently just a stand-in that logs what the real version would do
 impl ActuatorDriver {
-    pub fn new{which: Actuator} -> Self {
+    pub fn new(which: Actuator) -> Self {
         Self { which }
     }
 
     pub fn drive(&mut self, speed: u16, direction: Direction) {
-        info!("[stand-in] {} drive: speed {}, {}" self.which, speed, direction);
+        info!(
+            "[stand-in] {} drive: speed {}, {}",
+            self.which, speed, direction
+        );
     }
 
     pub fn sleep(&mut self) {
