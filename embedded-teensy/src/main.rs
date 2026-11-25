@@ -10,6 +10,8 @@ use actuators::ActuatorDriver;
 use defmt::{debug, info, warn};
 use embassy_executor::Spawner;
 use embassy_time::Timer;
+use embedded_common::Actuator;
+use static_cell::StaticCell;
 use teensy4_bsp::board;
 use teensy4_panic as _;
 
@@ -38,20 +40,31 @@ async fn main(spawner: Spawner) {
     };
     spawner.spawn(log_flush(poller)).unwrap();
     info!("embedded-teensy started");
-    // lunabot-cu finds the board by its serial number, "USR-PICO-PRIME" is
-    // embedded_common::PRIME_PICO_SERIAL; switch to constant once embedded_common
+    // lunabot-cu finds the board by its serial number, so the Teensy uses the
+    // Prime Pico's (embedded_common::PRIME_PICO_SERIAL).
     // is a dependency.
-    let (usb_tx, usb_rx) = usb::init(
+    let (_usb_tx, usb_rx) = usb::init(
         usb,
         usb::Identity {
             vid: 0xc0de,
             pid: 0xcafe,
             manufacturer: "USR",
-            product: "USR-PICO-PRIME",
-            serial_number: "USR-PICO-PRIME",
+            product: embedded_common::PRIME_PICO_SERIAL,
+            serial_number: embedded_common::PRIME_PICO_SERIAL,
         },
     );
-    spawner.spawn(usb_echo(usb_tx, usb_rx)).unwrap();
+
+    // Stand-ins for now: they only log. The actuator-outputs stage swaps in the
+    // real drivers. Same order as the Pico, so index 3 is the fan.
+    static ACTUATORS: StaticCell<[ActuatorDriver; 4]> = StaticCell::new();
+    let actuators = ACTUATORS.init([
+        ActuatorDriver::new(Actuator::Bucket),
+        ActuatorDriver::new(Actuator::Lift),
+        ActuatorDriver::new(Actuator::Dumper),
+        ActuatorDriver::new(Actuator::Motor4),
+    ]);
+    // The sending half, _usb_tx, goes to usb_tx_loop in the next substage.
+    spawner.spawn(host::usb_rx_loop(usb_rx, actuators)).unwrap();
     spawner.spawn(bootloader_watch()).unwrap();
 
     let led = board::led(&mut gpio2, pins.p13);
